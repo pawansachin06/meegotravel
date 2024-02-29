@@ -3,7 +3,7 @@
         <div class="md:container px-3 py-5 flex flex-wrap justify-center">
             <div class="w-full md:w-11/12 lg:w-11/12 xl:w-9/12 2xl:w-7/12 mb-8 text-center">
                 <small class="inline-block px-3 py-1 mb-3 rounded-full text-base font-semibold bg-primary-100 text-primary-500">Best Place to Buy eSIMs</small>
-                <h1 class="text-3xl md:text-4xl mb-3 font-bold">Topups, eSIMs, and Digital Products Marketplace</h1>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl !leading-snug mb-3 font-bold">Topups, eSIMs, and Digital Products Marketplace</h1>
                 <p class="mb-4 text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Deleniti odio, nostrum minus nisi perspiciatis tenetur doloremque, dolorum qui neque laudantium iure id, ipsa aut autem quia optio nam aliquid dolore?</p>
                 <div class="max-w-2xl mx-auto">
                     <div class="relative mb-3">
@@ -34,21 +34,23 @@
 
     <div class="container px-3 py-2">
         <div class="mb-8">
-            <h2 class="text-xl mb-2 font-semibold">Popular eSIM destinations</h2>
+            <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM destinations</h2>
+            <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
             <div id="home-country-slider" class="swiper">
                 <div class="swiper-wrapper">
                     @for($i = 0; $i < 10; $i++)
                     <div class="swiper-slide">
-                        <div class="text-center">
-                            <div class="inline-block shadow-lg w-14 h-14 px-2 py-2 rounded-full">
+                        <a href="/404" class="block w-full px-3 py-3 rounded text-center border-b-2 border-primary-200 hover:border-primary-500 shadow-lg transition-colors bg-primary-50 hover:bg-primary-100">
+                            <span class="inline-block mb-2 w-14 h-14">
                                 <picture>
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/United-states_flag_icon_round.svg/240px-United-states_flag_icon_round.svg.png" alt="flag" class="w-full h-auto" />
                                 </picture>
-                            </div>
-                            <p class="text-sm">USA {{ $i }}</p>
-                        </div>
-                </div>
-                @endfor
+                            </span>
+                            <p class="font-semibold leading-tight">USA</p>
+                            <p class="text-sm">{{ $i + 1 }} eSIMs</p>
+                        </a>
+                    </div>
+                    @endfor
             </div>
         </div>
     </div>
@@ -58,19 +60,20 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <a href="/">
-                        <img src="https://d2tlmlryquimxf.cloudfront.net/mobimatter-assests/assets/offerBanner1.webp" alt="offer" class="w-full h-auto" />
+                        <img src="https://dummyimage.com/1400x400" alt="offer" class="w-full h-auto" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <a href="/">
-                        <img src="https://d2tlmlryquimxf.cloudfront.net/mobimatter-assests/assets/offerBanner1.webp" alt="offer" class="w-full h-auto" />
+                        <img src="https://dummyimage.com/1400x400" alt="offer" class="w-full h-auto" />
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <h2 class="text-xl mb-2 font-semibold">Jump To</h2>
+    <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Jump To</h2>
+    <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
     <div class="flex flex-wrap -mx-1 mb-8">
         <div class="w-full sm:w-6/12 px-1 mb-2">
             <a href="/" title="Topup" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
@@ -90,7 +93,8 @@
         </div>
     </div>
 
-    <h2 class="text-xl mb-2 font-semibold">Popular eSIM offers</h2>
+    <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM offers</h2>
+    <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
     <div class="flex flex-wrap -mx-2 mb-8">
         @for($i = 0; $i < 9; $i++)
         <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
@@ -135,83 +139,47 @@
     @endfor
     </div>
 
-    <div class="px-3 py-5 mb-8 rounded-md shadow-lg bg-white">
-        <h2 class="text-xl mb-3 font-semibold text-center">MeegoTravel brings the best eSIM products from telecom operators under one roof</h2>
-        <div class="flex mb-2 flex-wrap gap-5 justify-center gap-2">
-            <div data-aos="fade-up" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/3hk2.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+    </div>
+
+    <div class="bg-primary-100 pb-10">
+        <div class="container px-3 py-9">
+            <h2 class="text-2xl md:text-4xl max-w-4xl mx-auto !leading-snug text-center mb-3 font-bold text-center">MeegoTravel brings the best eSIM products from telecom operators under one roof</h2>
+            <div class="flex mb-2 flex-wrap gap-5 justify-center gap-2">
+                <div data-aos="fade-up" class="w-12 h-12">
+                    <img src="https://mobimatter.com/static/images/3hk2.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+                </div>
+                <div data-aos="fade-up" data-aos-delay="50" class="w-12 h-12">
+                    <img src="https://mobimatter.com/static/images/o2img2.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100" class="w-12 h-12">
+                    <img src="https://mobimatter.com/static/images/esimgo.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+                </div>
+                <div data-aos="fade-up" data-aos-delay="150" class="w-12 h-12">
+                    <img src="https://mobimatter.com/static/images/telenor.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200" class="w-12 h-12">
+                    <img src="https://mobimatter.com/static/images/Orange.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+                </div>
+                <div data-aos="fade-up" data-aos-delay="250" class="w-12 h-12">
+                    <img src="https://mobimatter.com/static/images/sim2fly.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+                </div>
             </div>
-            <div data-aos="fade-up" data-aos-delay="50" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/o2img2.webp" alt="logo" class="block w-full h-full object-contain object-center" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="100" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/esimgo.webp" alt="logo" class="block w-full h-full object-contain object-center" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="150" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/telenor.webp" alt="logo" class="block w-full h-full object-contain object-center" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="200" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/Orange.webp" alt="logo" class="block w-full h-full object-contain object-center" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="250" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/sim2fly.webp" alt="logo" class="block w-full h-full object-contain object-center" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="300" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/UbigiNewLogo.webp" alt="logo" class="block w-full h-full object-contain object-center" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="350" class="w-8 h-8">
-                <img src="https://mobimatter.com/static/images/iij2.webp" alt="logo" class="block w-full h-full object-contain object-center" />
+        </div>
+    </div>
+    <div class="container px-3 -mt-10 mb-10">
+        <div class="max-w-4xl mx-auto px-5 py-7 mb-8 rounded-md shadow-lg bg-white">
+            <div class="flex justify-between flex-wrap">
+                <div class="w-full sm:w-7/12 lg:w-6/12 mb-5 sm:mb-0 sm:pr-4 text-center sm:text-left">
+                    <h2 class="text-2xl md:text-4xl mb-3 !leading-snug font-bold">Boost your eSIM experience</h2>
+                    <p class="mb-5 text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing, elit.</p>
+                    <x-button href="/">Download App</x-button>
+                </div>
+                <div class="w-full sm:w-5/12 text-center sm:text-right">
+                    <img src="https://dummyimage.com/400x250" alt="image" class="inline-block" />
+                </div>
             </div>
         </div>
     </div>
 
 
-    <div class="mb-8">
-        <h2 class="text-xl mb-2 text-center font-semibold">Why MeegoTravel eSIM Marketplace?</h2>
-        <div class="flex flex-wrap -mx-2">
-            <div class="w-6/12 md:w-3/12 px-2 lg:px-4 py-2">
-                <div data-aos="fade-up" class="relative">
-                    <div class="relative" style="padding-bottom:145%;">
-                        <img src="https://mobimatter.com/static/images/storeimag.webp" alt="bg" class="absolute top-0 bottom-0 left-0 right-0 h-full w-full object-cover object-center rounded-md" />
-                    </div>
-                    <div class="absolute left-0 right-0 top-0 px-2 lg:px-4 py-4 text-center">
-                        <h3 class="text-white font-semibold">Instant delivery & ready to use</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="w-6/12 md:w-3/12 px-2 lg:px-4 py-2">
-                <div data-aos="fade-up" data-aos-delay="50" class="relative">
-                    <div class="relative" style="padding-bottom:145%;">
-                        <img src="https://mobimatter.com/static/images/storeimag2.webp" alt="bg" class="absolute top-0 bottom-0 left-0 right-0 h-full w-full object-cover object-center rounded-md" />
-                    </div>
-                    <div class="absolute left-0 right-0 top-0 px-2 lg:px-4 py-4 text-center">
-                        <h3 class="text-white font-semibold">Instant delivery & ready to use</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="w-6/12 md:w-3/12 px-2 lg:px-4 py-2">
-                <div data-aos="fade-up" data-aos-delay="100" class="relative">
-                    <div class="relative" style="padding-bottom:145%;">
-                        <img src="https://mobimatter.com/static/images/storeimag3.webp" alt="bg" class="absolute top-0 bottom-0 left-0 right-0 h-full w-full object-cover object-center rounded-md" />
-                    </div>
-                    <div class="absolute left-0 right-0 top-0 px-2 lg:px-4 py-4 text-center">
-                        <h3 class="text-white font-semibold">Instant delivery & ready to use</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="w-6/12 md:w-3/12 px-2 lg:px-4 py-2">
-                <div data-aos="fade-up" data-aos-delay="150" class="relative">
-                    <div class="relative" style="padding-bottom:145%;">
-                        <img src="https://mobimatter.com/static/images/storeimag4.webp" alt="bg" class="absolute top-0 bottom-0 left-0 right-0 h-full w-full object-cover object-center rounded-md" />
-                    </div>
-                    <div class="absolute left-0 right-0 top-0 px-2 lg:px-4 py-4 text-center">
-                        <h3 class="text-white font-semibold">Instant delivery & ready to use</h3>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    </div>
 </x-app-layout>

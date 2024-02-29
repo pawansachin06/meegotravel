@@ -186,5 +186,5 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
-
+    'version' => date('d-M-Y-h-i-a'),
 ];

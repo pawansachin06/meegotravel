@@ -4,22 +4,14 @@
         new Swiper('#home-country-slider', {
             loop: true,
             slidesPerView: 2,
-            spaceBetween: 5,
+            spaceBetween: 10,
             breakpoints: {
-                320: { slidesPerView: 3 },
-                370: { slidesPerView: 4 },
-                400: { slidesPerView: 5 },
-                480: { slidesPerView: 6 },
-                570: { slidesPerView: 7 },
-                680: { slidesPerView: 8 },
-                1024: { slidesPerView: 10 },
-                1280: { slidesPerView: 12 },
-                1535: { slidesPerView: 15 },
+                480: { slidesPerView: 3 },
+                768: { slidesPerView: 4 },
+                1024: { slidesPerView: 5 },
+                1280: { slidesPerView: 6 },
+                1535: { slidesPerView: 7 },
             },
-            // navigation: {
-            //     nextEl: '.swiper-button-next',
-            //     prevEl: '.swiper-button-prev',
-            // },
         });
 
         new Swiper('#home-offer-slider', {
