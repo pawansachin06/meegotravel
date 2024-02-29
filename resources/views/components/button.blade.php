@@ -1,6 +1,6 @@
 @props([
     'href' => '',
-    'baseClasses' => 'select-none inline-flex items-center justify-center gap-2 px-4 py-2 bg-gray-800 border border-transparent rounded font-semibold text-white tracking-wide hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none transition ease-in-out duration-150',
+    'baseClasses' => 'btn-primary select-none inline-flex items-center justify-center gap-2 px-4 py-2 border rounded font-semibold text-white tracking-wide focus:outline-primary-500 focus:outline-offset-2 transition',
 ])
 
 @if( !empty($href) )

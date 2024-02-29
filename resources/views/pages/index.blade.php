@@ -1,25 +1,37 @@
 <x-app-layout aos="1" swiper="1">
-    <section class="relative mb-5">
-        <picture>
-            <img src="https://mobimatter.com/static/images/mmBannerDesktop.webp" alt="banner" class="absolute top-0 left-0 right-0 bottom-0 h-full w-full object-cover" />
-        </picture>
-        <div class="container px-3 relative">
-            <div class="py-14"></div>
-            <div class="max-w-5xl mx-auto">
-                <span class="text-sm text-white drop-shadow">Search for the best eSIM offers</span>
-                <div class="relative">
-                    <input type="text" placeholder="Search for a destination..." title="Search for a destination" spellcheck="false" class="w-full text-lg pl-4 pr-16 py-4 border-0 shadow-lg rounded-md" />
-                    <div class="absolute px-2 flex justify-center items-center top-0 bottom-0 right-0">
-                        <button type="submit" title="Search" class="px-2 py-2 inline-flex items-center justify-center leading-none rounded-full focus:outline-primary-400 focus:outline-offset-2 bg-primary-500 text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-7 h-7" width="24" height="24" viewBox="0 -960 960 960">
-                                <path d="M380-320q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
-                            </svg>
-                        </button>
+    <section class="relative py-5">
+        <div class="md:container px-3 py-5 flex flex-wrap justify-center">
+            <div class="w-full md:w-11/12 lg:w-11/12 xl:w-9/12 2xl:w-7/12 mb-8 text-center">
+                <small class="inline-block px-3 py-1 mb-3 rounded-full text-base font-semibold bg-primary-100 text-primary-500">Best Place to Buy eSIMs</small>
+                <h1 class="text-3xl md:text-4xl mb-3 font-bold">Topups, eSIMs, and Digital Products Marketplace</h1>
+                <p class="mb-4 text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Deleniti odio, nostrum minus nisi perspiciatis tenetur doloremque, dolorum qui neque laudantium iure id, ipsa aut autem quia optio nam aliquid dolore?</p>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative mb-3">
+                        <input type="text" placeholder="Search for a destination..." title="Search for a destination" spellcheck="false" class="w-full text-lg pl-4 pr-16 py-4 border-0 shadow-lg rounded-md focus:ring-primary-500" />
+                        <div class="absolute px-2 flex justify-center items-center top-0 bottom-0 right-0">
+                            <button type="submit" title="Search" class="px-2 py-2 inline-flex items-center justify-center leading-none rounded-full focus:outline-primary-400 focus:outline-offset-2 bg-primary-500 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-7 h-7" width="24" height="24" viewBox="0 -960 960 960">
+                                    <path d="M380-320q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 justify-evenly px-1">
+                        <div class="">
+                            <p class="text-sm text-gray-400">34 k+ Prodcuts</p>
+                        </div>
+                        <div class="">
+                            <p class="text-sm text-gray-400">243 k+ Users</p>
+                        </div>
+                        <div class="">
+                            <p class="text-sm text-gray-400">2 + Million Sells</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <div class="container px-3 py-2">
         <div class="mb-8">
             <h2 class="text-xl mb-2 font-semibold">Popular eSIM destinations</h2>
@@ -46,12 +58,12 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <a href="/">
-                        <img src="https://d2tlmlryquimxf.cloudfront.net/mobimatter-assests/assets/offerBanner1.webp" alt="offer" class="w-100 h-auto" />
+                        <img src="https://d2tlmlryquimxf.cloudfront.net/mobimatter-assests/assets/offerBanner1.webp" alt="offer" class="w-full h-auto" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <a href="/">
-                        <img src="https://d2tlmlryquimxf.cloudfront.net/mobimatter-assests/assets/offerBanner1.webp" alt="offer" class="w-100 h-auto" />
+                        <img src="https://d2tlmlryquimxf.cloudfront.net/mobimatter-assests/assets/offerBanner1.webp" alt="offer" class="w-full h-auto" />
                     </a>
                 </div>
             </div>

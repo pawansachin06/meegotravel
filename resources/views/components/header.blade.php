@@ -9,9 +9,9 @@
                 </span>
             </label>
 
-            <a href="/" title="{{ config('app.name', '') }}" class="inline-block py-1 select-none">
+            <a href="/" title="{{ config('app.name', '') }}" class="inline-block py-1 focus:outline-primary-500 focus:outline-offset-2 select-none">
                 <picture>
-                    <img src="https://dummyimage.com/215x45" alt="logo" />
+                    <img src="/img/logo.png?v=1" alt="logo" />
                 </picture>
             </a>
         </div>
@@ -19,22 +19,22 @@
         <nav class="flex gap-3 items-center">
             <ul class="hidden lg:flex gap-3">
                 <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500">New eSIM</a>
+                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">New eSIM</a>
                 </li>
                 <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500">Topup</a>
+                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Topup</a>
                 </li>
                 <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500">Check Usage</a>
+                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Check Usage</a>
                 </li>
                 <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500">Blog</a>
+                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Blog</a>
                 </li>
                 <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500">Help & Support</a>
+                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Help & Support</a>
                 </li>
                 <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500">FAQs</a>
+                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">FAQs</a>
                 </li>
             </ul>
             <x-button class="text-nowrap">

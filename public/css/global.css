@@ -12,6 +12,10 @@
     background: #16a34a;
 }
 
+.btn-primary {
+    background: linear-gradient(114deg, #612f62, #bb6083);
+}
+
 #app-header {
     z-index: 10;
 }
