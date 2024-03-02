@@ -38,8 +38,8 @@
     <link rel="preload" as="style" href="/css/global.css?v={{ config('app.version') }}" />
     <link rel="stylesheet" href="/css/global.css?v={{ config('app.version') }}" />
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" />
 
     <script defer src="/js/base.js?v={{ config('app.version') }}"></script>
 </head>
@@ -99,7 +99,11 @@
                 </div>
             </div>
             <div class="grow overflow-y-auto app-scrollbar border-b">
-                <a href="" class="block px-3 py-3">Menu will be here</a>
+                <x-sidebar.menu-item href="{{ route('topup') }}" :active="request()->routeIs('topup')">Topup</x-sidebar.menu-item>
+                <x-sidebar.menu-item href="{{ route('check-usage') }}" :active="request()->routeIs('check-usage')">Check Usage</x-sidebar.menu-item>
+                <x-sidebar.menu-item href="{{ route('articles.index') }}" :active="request()->routeIs('articles.index')">Blog</x-sidebar.menu-item>
+                <x-sidebar.menu-item href="{{ route('troubleshoot') }}" :active="request()->routeIs('troubleshoot')">Help & Support</x-sidebar.menu-item>
+                <x-sidebar.menu-item href="{{ route('faqs') }}" :active="request()->routeIs('faqs')">FAQs</x-sidebar.menu-item>
             </div>
             <div class="text-center py-1">
                 <a href="{{ config('app.url') }}" target="_blank" rel="noopener noreferrer nofollow" class="text-sm leading-none">Built with {{ config('app.name') }} Team</a>
