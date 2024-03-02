@@ -1,8 +1,8 @@
 <header id="app-header" class="sticky top-0 shadow-lg bg-white">
     <div class="xl:container px-3 h-14 flex items-center justify-between">
         <div class="inline-flex items-center gap-2">
-            <label for="app-sidebar-checkbox" title="Toggle sidebar" class="app-sidebar-btn group inline-flex items-center justify-center cursor-pointer text-gray-600 hover:text-gray-900 transition-colors">
-                <span class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-gray-100 group-hover:bg-gray-300 transition-colors">
+            <label for="app-sidebar-checkbox" title="Toggle sidebar" class="app-sidebar-btn group inline-flex items-center justify-center cursor-pointer transition-colors">
+                <span class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-primary-50 border border-primary-200 group-hover:bg-primary-100 group-hover:text-primary-500 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" width="24" height="24" viewBox="0 -960 960 960">
                         <path d="M160-240q-17 0-28.5-11.5T120-280q0-17 11.5-28.5T160-320h640q17 0 28.5 11.5T840-280q0 17-11.5 28.5T800-240H160Zm0-200q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h640q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440H160Zm0-200q-17 0-28.5-11.5T120-680q0-17 11.5-28.5T160-720h640q17 0 28.5 11.5T840-680q0 17-11.5 28.5T800-640H160Z" />
                     </svg>
@@ -18,26 +18,14 @@
 
         <nav class="flex gap-3 items-center">
             <ul class="hidden lg:flex gap-3">
-                <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">New eSIM</a>
-                </li>
-                <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Topup</a>
-                </li>
-                <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Check Usage</a>
-                </li>
-                <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Blog</a>
-                </li>
-                <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">Help & Support</a>
-                </li>
-                <li>
-                    <a href="" class="inline-block px-1 py-3 hover:text-primary-500 focus:outline-primary-500 focus:outline-offset-2">FAQs</a>
-                </li>
+                <x-header.menu-item>New eSIM</x-header.menu-item>
+                <x-header.menu-item href="{{ route('topup') }}" :active="request()->routeIs('topup')">Topup</x-header.menu-item>
+                <x-header.menu-item href="{{ route('check-usage') }}" :active="request()->routeIs('check-usage')">Check Usage</x-header.menu-item>
+                <x-header.menu-item href="{{ route('articles.index') }}" :active="request()->routeIs('articles.index')">Blog</x-header.menu-item>
+                <x-header.menu-item href="{{ route('troubleshoot') }}" :active="request()->routeIs('troubleshoot')">Help & Support</x-header.menu-item>
+                <x-header.menu-item href="{{ route('faqs') }}" :active="request()->routeIs('faqs')">FAQs</x-header.menu-item>
             </ul>
-            <x-button class="text-nowrap">
+            <x-button href="{{ route('login') }}" class="text-nowrap">
                 Join Now
             </x-button>
         </nav>

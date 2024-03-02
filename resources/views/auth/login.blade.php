@@ -1,11 +1,12 @@
-<x-guest-layout>
+@php
+    $breadcrumbs = [ ['name'=> 'Login', 'link'=> route('login')] ];
+@endphp
+<x-app-layout>
+    <x-page-banner :$breadcrumbs title="Login" />
+
     <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
-
+        <div class="my-2"></div>
         <x-validation-errors class="mb-4" />
-
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
                 {{ session('status') }}
@@ -15,34 +16,26 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
+            <x-float.input id="email" name="email" type="email" value="" autofocus required label="Email" placeholder="Email" class="mb-5" />
+            <x-float.input id="password" name="password" type="password" value="" required label="Password" placeholder="Password" class="mb-4" />
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
+            <div class="flex items-center justify-between mb-2">
+                <label for="remember_me" class="flex gap-2 items-center">
                     <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <span class="select-none cursor-pointer text-sm text-gray-800">{{ __('Remember me') }}</span>
                 </label>
-            </div>
 
-            <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                    <a class="text-sm font-semibold focus:outline-primary-500 focus:outline-offset-2 text-primary-500" href="{{ route('password.request') }}">
+                        {{ __('Forgot password?') }}
                     </a>
                 @endif
 
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
             </div>
+            <x-button class="w-full mb-2">{{ __('Log in') }}</x-button>
         </form>
+        <div class="">
+            <p>I have no account. <a href="{{ route('register') }}" class="font-semibold text-primary-500">Create an account</a></p>
+        </div>
     </x-authentication-card>
-</x-guest-layout>
+</x-app-layout>

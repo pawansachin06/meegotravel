@@ -29,7 +29,6 @@
 
     if (typeof AOS !== 'undefined') {
         AOS.init();
-        console.log({AOS});
     }
 
 })();

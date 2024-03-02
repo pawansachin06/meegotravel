@@ -44,7 +44,7 @@
     <script defer src="/js/base.js?v={{ config('app.version') }}"></script>
 </head>
 
-<body class="font-sans antialiased bg-gray-100">
+<body class="font-sans antialiased bg-gray-50">
         <x-banner />
         <x-header />
         <main class="grow">{{ $slot }}</main>
@@ -81,7 +81,7 @@
     <div id="app-sidebar-container" class="flex flex-col">
         <label id="app-sidebar-overlay" for="app-sidebar-checkbox" class="transition-colors"></label>
         <div id="app-sidebar" class="flex flex-col bg-white shadow-sm">
-            <div class="flex-none flex px-1 h-14 shadow justify-between">
+            <div class="flex-none flex px-2 h-14 shadow justify-between">
                 <span class="flex px-1 leading-tight truncate flex-col justify-center select-none">
                     @auth
                     <p class="truncate"> {{ auth()->user()->name }}</p>
@@ -90,7 +90,7 @@
                 </span>
                 <div class="flex gap-1">
                     <label for="app-sidebar-checkbox" title="Toggle sidebar" class="app-sidebar-close-btn group inline-flex items-center justify-center cursor-pointer text-gray-600 hover:text-gray-900 transition-colors">
-                        <span class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-gray-100 group-hover:bg-gray-300 transition-colors">
+                        <span class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-primary-50 border border-primary-200 group-hover:bg-primary-100 group-hover:text-primary-500 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" width="24" height="24" viewBox="0 -960 960 960">
                                 <path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z" />
                             </svg>
@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="grow overflow-y-auto app-scrollbar border-b">
-                @livewire('navigation-menu')
+                <a href="" class="block px-3 py-3">Menu will be here</a>
             </div>
             <div class="text-center py-1">
                 <a href="{{ config('app.url') }}" target="_blank" rel="noopener noreferrer nofollow" class="text-sm leading-none">Built with {{ config('app.name') }} Team</a>

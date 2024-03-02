@@ -1,4 +1,8 @@
-<x-guest-layout>
+@php
+    $breadcrumbs = [ ['name'=> 'Forgot Password', 'link'=> route('password.request')] ];
+@endphp
+<x-app-layout>
+    <x-page-banner :$breadcrumbs title="Forgot Password" />
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
@@ -19,16 +23,12 @@
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
-            <div class="block">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
+            <x-float.input id="email" name="email" type="email" value="" autofocus required :value="old('email')" label="Email" placeholder="Email" class="mb-3" />
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
+            <x-button class="w-full mb-2">{{ __('Email Password Reset Link') }}</x-button>
         </form>
+        <div class="">
+            <p>I remember password. <a href="{{ route('login') }}" class="font-semibold text-primary-500">Back to login</a></p>
+        </div>
     </x-authentication-card>
-</x-guest-layout>
+</x-app-layout>
