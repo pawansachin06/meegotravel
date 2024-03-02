@@ -99,6 +99,7 @@
                 </div>
             </div>
             <div class="grow overflow-y-auto app-scrollbar border-b">
+                <x-sidebar.menu-item href="{{ route('home') }}" :active="request()->routeIs('home')">New eSIMs</x-sidebar.menu-item>
                 <x-sidebar.menu-item href="{{ route('topup') }}" :active="request()->routeIs('topup')">Topup</x-sidebar.menu-item>
                 <x-sidebar.menu-item href="{{ route('check-usage') }}" :active="request()->routeIs('check-usage')">Check Usage</x-sidebar.menu-item>
                 <x-sidebar.menu-item href="{{ route('articles.index') }}" :active="request()->routeIs('articles.index')">Blog</x-sidebar.menu-item>

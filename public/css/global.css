@@ -17,6 +17,13 @@
     box-shadow: inset 0 450px 0 #ffffff;
 }
 
+
+.input-switch:checked ~ .input-switch-dot {
+    transform: translateX(100%);
+    background-color: #bb6083;
+}
+
+
 .btn-primary {
     background: linear-gradient(114deg, #612f62, #bb6083);
 }

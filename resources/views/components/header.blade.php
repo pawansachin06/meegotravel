@@ -17,8 +17,8 @@
         </div>
 
         <nav class="flex gap-3 items-center">
-            <ul class="hidden lg:flex gap-3">
-                <x-header.menu-item>New eSIM</x-header.menu-item>
+            <ul class="hidden lg:flex gap-3 select-none">
+                <x-header.menu-item href="{{ route('home') }}" :active="request()->routeIs('home')">New eSIM</x-header.menu-item>
                 <x-header.menu-item href="{{ route('topup') }}" :active="request()->routeIs('topup')">Topup</x-header.menu-item>
                 <x-header.menu-item href="{{ route('check-usage') }}" :active="request()->routeIs('check-usage')">Check Usage</x-header.menu-item>
                 <x-header.menu-item href="{{ route('articles.index') }}" :active="request()->routeIs('articles.index')">Blog</x-header.menu-item>
