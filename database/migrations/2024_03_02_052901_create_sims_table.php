@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sims', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->uuid('id')->unique()->primary;
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('tagline')->default('');

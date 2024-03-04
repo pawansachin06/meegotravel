@@ -6,6 +6,17 @@
 
     <x-authentication-card>
         <div class="my-2"></div>
+
+        <div class="mb-3">
+            <x-button.google />
+        </div>
+
+        <div class="text-sm flex items-center text-center mb-4 select-none">
+            <span class="grow border-b"></span>
+            <span class="px-2">{{ __('or continue with email') }}</span>
+            <span class="grow border-b"></span>
+        </div>
+
         <x-validation-errors class="mb-4" />
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -16,7 +27,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <x-float.input id="email" name="email" type="email" value="" autofocus required label="Email" placeholder="Email" class="mb-5" />
+            <x-float.input id="email" name="email" type="email" value="{{ old('email') }}" autofocus required label="Email" placeholder="Email" class="mb-5" />
             <x-float.input id="password" name="password" type="password" value="" required label="Password" placeholder="Password" class="mb-4" />
 
             <div class="flex items-center justify-between mb-2">

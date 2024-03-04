@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SocialLoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.index');
 })->name('home');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login/redirect/google', [
+        SocialLoginController::class, 'googleRedirect'
+    ])->name('login.google');
+    Route::get('/login/callback/google', [
+        SocialLoginController::class, 'googleCallback'
+    ]);
+});
 
 Route::get('/blog', function(){
     $breadcrumbs = [ ['name'=> 'Blog', 'link'=> '/blog'] ];
@@ -43,7 +54,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])
+        ->name('dashboard');
 });

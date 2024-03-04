@@ -38,8 +38,8 @@
     <link rel="preload" as="style" href="/css/global.css?v={{ config('app.version') }}" />
     <link rel="stylesheet" href="/css/global.css?v={{ config('app.version') }}" />
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
 
     <script defer src="/js/base.js?v={{ config('app.version') }}"></script>
 </head>
@@ -50,7 +50,7 @@
         <main class="grow">{{ $slot }}</main>
         <x-footer />
         <div class="py-12"></div>
-        <div class="fixed left-0 bottom-0 right-0 border-t sm:hidden bg-white">
+        <div id="app-bottom-navbar" class="fixed left-0 bottom-0 right-0 border-t sm:hidden bg-white">
             <div class="flex justify-around items-center">
                 <a href="" class="{{ request()->routeIs('home') ? 'text-primary-500' : 'hover:bg-primary-50 text-gray-600' }} w-3/12 inline-flex flex-col justify-center items-center py-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7 my-1" width="24" height="24" viewBox="0 -960 960 960">

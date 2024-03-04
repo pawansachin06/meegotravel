@@ -1,14 +1,24 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
+    <div class="lg:container px-3 py-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-full sm:w-6/12 px-2 mb-4">
+                    <x-account.sidebar />
+                </div>
+                <div class="w-full sm:w-6/12 px-2 mb-4">
+                    <div class="mb-2">
+                        <x-account.menu-item href="{{ route('troubleshoot') }}">Help & Support</x-account.menu-item>
+                    </div>
+                    <div class="mb-2">
+                        <x-account.menu-item href="{{ route('troubleshoot') }}">FAQ</x-account.menu-item>
+                    </div>
+                    <div class="mb-2">
+                        <x-account.menu-item href="{{ route('troubleshoot') }}">Order History</x-account.menu-item>
+                    </div>
+                    <div class="mb-2">
+                        <x-account.menu-item href="{{ route('troubleshoot') }}">My eSIMs</x-account.menu-item>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

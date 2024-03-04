@@ -14,10 +14,15 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+                sans: ['Rubik', ...defaultTheme.fontFamily.sans],
             },
             container: {
                 center: true,
+            },
+            padding: {
+                'full' : '100%',
+                '3/4' : '75%',
+                '1/2' : '50%',
             },
             colors: {
                 primary: {

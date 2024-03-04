@@ -32,6 +32,10 @@
     z-index: 10;
 }
 
+#app-bottom-navbar {
+    z-index: 9;
+}
+
 #app-sidebar-checkbox + #app-sidebar-container #app-sidebar-overlay {
     position: fixed;
     width: 1px;
