@@ -58,26 +58,28 @@
     </section>
 
 
-    <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Jump To</h2>
-    <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
-    <div class="flex flex-wrap -mx-1 mb-8">
-        <div class="w-full sm:w-6/12 px-1 mb-2">
-            <a href="/" title="Topup" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
-                    <path d="M460-280v-160h-80l120-240v160h80L460-280ZM280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-120v40h400v-40H280Zm0-80h400v-480H280v480Zm0-560h400v-40H280v40Zm0 0v-40 40Zm0 640v40-40Z" />
-                </svg>
-                <span class="text-lg font-semibold">eSIMs</span>
-            </a>
+    <section class="container px-3">
+        <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Jump To</h2>
+        <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
+        <div class="flex flex-wrap -mx-1 mb-8">
+            <div class="w-full sm:w-6/12 px-1 mb-2">
+                <a href="/" title="Topup" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
+                        <path d="M460-280v-160h-80l120-240v160h80L460-280ZM280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-120v40h400v-40H280Zm0-80h400v-480H280v480Zm0-560h400v-40H280v40Zm0 0v-40 40Zm0 640v40-40Z" />
+                    </svg>
+                    <span class="text-lg font-semibold">eSIMs</span>
+                </a>
+            </div>
+            <div class="w-full sm:w-6/12 px-1 mb-2">
+                <a href="/" title="Check Usage" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
+                        <path d="M480-80q-83 0-156-31.5t-127-86Q143-252 111.5-325T80-480q0-157 104-270t256-128v120q-103 14-171.5 92.5T200-480q0 116 82 198t198 82q66 0 123.5-28t96.5-76l104 60q-54 75-139 119.5T480-80Zm366-238-104-60q9-24 13.5-49.5T760-480q0-107-68.5-185.5T520-758v-120q152 15 256 128t104 270q0 44-8 85t-26 77Z" />
+                    </svg>
+                    <span class="text-lg font-semibold">Check Usage</span>
+                </a>
+            </div>
         </div>
-        <div class="w-full sm:w-6/12 px-1 mb-2">
-            <a href="/" title="Check Usage" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
-                    <path d="M480-80q-83 0-156-31.5t-127-86Q143-252 111.5-325T80-480q0-157 104-270t256-128v120q-103 14-171.5 92.5T200-480q0 116 82 198t198 82q66 0 123.5-28t96.5-76l104 60q-54 75-139 119.5T480-80Zm366-238-104-60q9-24 13.5-49.5T760-480q0-107-68.5-185.5T520-758v-120q152 15 256 128t104 270q0 44-8 85t-26 77Z" />
-                </svg>
-                <span class="text-lg font-semibold">Check Usage</span>
-            </a>
-        </div>
-    </div>
+    </section>
 
     <div class="bg-primary-100 pb-10">
         <div class="container px-3 py-9">

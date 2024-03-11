@@ -35,6 +35,10 @@
         <link rel="stylesheet" href="/css/lib/aos.css?v=2.3.1" />
     @endif
 
+    <link rel="preload" as="style" href="/css/lib/toastify.min.css?v={{ config('app.version') }}" />
+    <link rel="stylesheet" href="/css/lib/toastify.min.css?v={{ config('app.version') }}" />
+
+
     <link rel="preload" as="style" href="/css/global.css?v={{ config('app.version') }}" />
     <link rel="stylesheet" href="/css/global.css?v={{ config('app.version') }}" />
 
@@ -121,6 +125,8 @@
     @if(!empty($aos))
         <script defer src="/js/lib/aos.js?v=2.3.1"></script>
     @endif
+    <script defer src="/js/lib/toastify.min.js?v={{ config('app.version') }}"></script>
+    <script defer src="/js/utils.js?v={{ config('app.version') }}"></script>
     <script defer src="/js/global.js?v={{ config('app.version') }}"></script>
 </body>
 

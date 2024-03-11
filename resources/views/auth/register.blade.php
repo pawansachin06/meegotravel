@@ -8,11 +8,12 @@
         <div class="my-2"></div>
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" autocomplete="off">
             @csrf
 
-            <x-float.input id="name" name="name" type="text" value="" autofocus required label="Name" placeholder="Name" class="mb-5" />
-            <x-float.input id="email" name="email" type="email" value="" required label="Email" placeholder="Email" class="mb-5" />
+            <x-float.input id="email" name="email" type="email" value="" autofocus required label="Email" placeholder="Email" class="mb-5" />
+            <x-float.input id="name" name="name" type="text" value="" required label="Name" placeholder="Name" class="mb-5" />
+            <x-float.input id="referral_code" name="referral_code" type="text" value="" label="Referral Code" placeholder="Referral Code" class="mb-5" />
             <x-float.input id="password" name="password" type="password" value="" required label="Password" placeholder="Password" class="mb-5" />
             <x-float.input id="password_confirmation" name="password_confirmation" type="password" value="" required label="Confirm Password" placeholder="Confirm Password" class="mb-3" />
 

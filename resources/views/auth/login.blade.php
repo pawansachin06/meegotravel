@@ -17,6 +17,13 @@
             <span class="grow border-b"></span>
         </div>
 
+
+        <div class="mb-6 rounded text-center border border-red-500">
+            email: admin@admin.com<br>
+            password: password
+        </div>
+
+
         <x-validation-errors class="mb-4" />
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">

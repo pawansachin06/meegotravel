@@ -49,6 +49,15 @@ Route::get('/esim', function(){
 //     'name' => 'esims'
 // ]);
 
+
+Route::resource('/dashboard/users', UserController::class, [
+    'name' => 'users'
+]);
+
+
+
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

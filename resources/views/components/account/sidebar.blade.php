@@ -1,4 +1,4 @@
-<div class="rounded-lg shadow-sm overflow-hidden bg-white">
+<div class="rounded-lg border shadow-sm overflow-hidden bg-white">
     <div class="flex gap-2 px-2 py-2 border-b">
         <div>
             <div class="relative w-16 h-16">
@@ -17,6 +17,9 @@
         </div>
     </div>
     <div>
+        @if( auth()->user()->role == \App\Enums\UserRoleEnum::ADMIN )
+            <a href="{{ route('users.index') }}" class=" block px-3 py-2 hover:bg-primary-50">Users</a>
+        @endif
 
         <hr />
         <form method="POST" action="{{ route('logout') }}" class="block w-full">

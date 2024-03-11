@@ -16,11 +16,14 @@ return new class extends Migration
             $table->uuid('id')->unique()->primary;
             $table->string('name');
             $table->string('lastname')->nullable();
-            $table->string('username')->nullable();
+            $table->string('username')->unique()->nullable();
             $table->string('role')->default(UserRoleEnum::USER);
             $table->string('phone_prefix')->nullable();
+            $table->string('phone_country')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->unique();
+            $table->string('referral_code')->nullable();
+            $table->string('unique_code')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();

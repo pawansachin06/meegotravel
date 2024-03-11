@@ -187,4 +187,5 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
     'version' => date('d-M-Y-h-i-a'),
+    'admin_emails'=> env('ADMIN_EMAILS', 'byvexarvind@gmail.com,pawansachin06@gmail.com'),
 ];

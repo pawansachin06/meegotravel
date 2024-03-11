@@ -8,6 +8,7 @@ use Exception;
 use Hidehalo\Nanoid\Client;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Enum;
 
 class UserController extends Controller
@@ -24,9 +25,17 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
-        $items = User::paginate(10)->withQueryString();
+        $currentUser = $req->user();
+        $query = User::query();
+        if($currentUser->role == UserRoleEnum::ADMIN){
+        } else if($currentUser->role == UserRoleEnum::RESELLER){
+            $query = $query->where('role', UserRoleEnum::USER);
+        } else {
+            $query = $query->where('id', $currentUser->id);
+        }
+        $items = $query->latest()->paginate(10)->withQueryString();
         return view('users.index', ['items' => $items]);
     }
 
@@ -35,24 +44,38 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
+        $currentUser = $req->user();
+        $req->merge(['email' => strtolower($req['email']) ]);
+        $validated = $req->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'lastname' => ['nullable', 'string', 'max:255'],
+            'email' => ['string', 'email', 'max:255', Rule::unique(User::class)],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'role' => [new Enum(UserRoleEnum::class)],
+            'password' => ['string', 'max:26'],
+            'referral_code' => ['nullable', 'string', 'max:255',],
+            'unique_code' => ['nullable', 'string', 'max:255', Rule::unique(User::class)],
+        ]);
+
+        if($currentUser->role !== UserRoleEnum::ADMIN) {
+            $validated['role'] = UserRoleEnum::USER;
+        }
+
+        $validated['password'] = Hash::make($validated['password']);
+
         try {
-            $nanoidClient = new Client();
-            $nanoid = $nanoidClient->generateId();
-            $item = User::create([
-                'name' => 'New User',
-                'email' => 'user@'. $nanoid . '.com',
-            ]);
+            $item = User::create($validated);
             return response()->json([
                 'success' => true,
-                'redirect' => route('users.edit', $item),
+                'redirect' => route('users.edit', $item->id),
                 'message' => 'User created',
             ]);
         } catch (Exception $e) {
@@ -84,16 +107,25 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $req, User $user)
     {
+        $currentUser = $req->user();
         $item = $user;
-        $request->merge(['email' => strtolower($request['email']) ]);
-        $validated = $request->validate([
+        $req->merge(['email' => strtolower($req['email']) ]);
+        $validated = $req->validate([
             'name' => ['required', 'string', 'max:255'],
+            'lastname' => ['nullable', 'string', 'max:255'],
             'email' => ['string', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:255'],
             'role' => [new Enum(UserRoleEnum::class)],
+            'referral_code' => ['nullable', 'string', 'max:255',],
+            'unique_code' => ['nullable', 'string', 'max:255', Rule::unique(User::class)->ignore($user->id)],
         ]);
+
+        if($currentUser != UserRoleEnum::ADMIN) {
+            $validated['role'] = UserRoleEnum::USER;
+        }
+
         try {
             $item->update($validated);
             return response()->json([

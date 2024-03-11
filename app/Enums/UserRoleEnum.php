@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum UserRoleEnum: string
 {
-    case ADMIN = 'ADMIN';
+    case ADMIN    = 'ADMIN';
     case RESELLER = 'RESELLER';
-    case USER  = 'USER';
+    case USER     = 'USER';
 
     public static function toArray() : array {
         $arr = [];

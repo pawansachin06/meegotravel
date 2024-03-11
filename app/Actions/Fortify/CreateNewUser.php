@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Enums\UserRoleEnum;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -23,15 +24,25 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
+            'referral_code' => ['nullable', 'string', 'max:255',],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return DB::transaction(function () use ($input) {
+        $adminEmails = config('app.admin_emails');
+        $adminEmails = !empty($adminEmails) ? explode(',', $adminEmails) : [];
+        $role = UserRoleEnum::USER;
+        if(in_array($input['email'], $adminEmails)){
+            $role = UserRoleEnum::ADMIN;
+        }
+
+        return DB::transaction(function () use ($input, $role) {
             return tap(User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'role' => $role,
+                'referral_code' => $input['referral_code'],
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
                 $this->createTeam($user);

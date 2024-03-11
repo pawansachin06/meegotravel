@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary;
-            $table->foreignUuid('user_id')->index();
+            $table->foreignUuid('user_id')->cascadeOnDelete()->index();
             $table->string('name');
             $table->boolean('personal_team');
             $table->timestamps();

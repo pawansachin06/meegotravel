@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoleEnum;
 use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -32,11 +33,19 @@ class SocialLoginController extends Controller
                 Auth::login($finduser);
                 return redirect(RouteServiceProvider::HOME);
             } else {
+                $adminEmails = config('app.admin_emails');
+                $adminEmails = !empty($adminEmails) ? explode(',', $adminEmails) : [];
+                $role = UserRoleEnum::USER;
+                if(in_array($googleUser->email, $adminEmails)){
+                    $role = UserRoleEnum::ADMIN;
+                }
+
                 $newUser = User::updateOrCreate([
                     'email' => $googleUser->email,
                 ], [
                     'name' => $googleUser->name,
                     'email' => $googleUser->email,
+                    'role' => $role,
                     'email_verified_at' => now(),
                     'profile_photo_path' => $googleUser->avatar,
                 ]);
