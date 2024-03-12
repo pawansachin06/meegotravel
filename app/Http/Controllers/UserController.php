@@ -22,12 +22,22 @@ class UserController extends Controller
         ]);
     }
 
-    public function dashboardOverview(Request $req)
+    public function overview(Request $req)
     {
         $currentUser = $req->user();
-        return view('pages.dashboard-overview', [
+        return view('dashboard.index', [
             'currentUser' => $currentUser,
         ]);
+    }
+
+    public function esims(Request $req)
+    {
+        return view('dashboard.esims');
+    }
+
+    public function support(Request $req)
+    {
+        return view('dashboard.support');
     }
 
     /**

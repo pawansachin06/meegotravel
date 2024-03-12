@@ -63,7 +63,9 @@ Route::middleware([
 
 
 Route::middleware('auth.adminOrReseller')->group(function(){
-    Route::get('/dashboard/overview', [UserController::class, 'dashboardOverview'])->name('dashboard.overview');
+    Route::get('/dashboard/overview', [UserController::class, 'overview'])->name('dashboard.overview');
+    Route::get('/dashboard/esims', [UserController::class, 'esims'])->name('dashboard.esims');
+    Route::get('/dashboard/support', [UserController::class, 'support'])->name('dashboard.support');
     Route::resource('/dashboard/users', UserController::class, [
         'name' => 'users'
     ]);

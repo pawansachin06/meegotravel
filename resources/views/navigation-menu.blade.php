@@ -2,7 +2,7 @@
     <a href="{{ route('dashboard.overview') }}" class="flex-none flex flex-row items-center text-xl truncate select-none focus:outline focus:outline-primary-500">
         <div class="flex flex-col h-full leading-snug mb-1 justify-center truncate">
             <div class="truncate font-semibold">MeegoTravel</div>
-            <small class="block text-sm leading-none font-medium truncate">{{ auth()->user()->role }} AREA</small>
+            <small class="block text-sm leading-none font-medium truncate">{{ auth()->user()->role }} PANEL</small>
         </div>
     </a>
     <div class="inline-flex items-center gap-2">

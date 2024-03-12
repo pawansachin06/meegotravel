@@ -5,12 +5,7 @@
                 <h1 class="text-2xl font-semibold">Users</h1>
             </div>
             <div class="">
-                @if(
-                    auth()->user()->role == \App\Enums\UserRoleEnum::ADMIN
-                    || auth()->user()->role == \App\Enums\UserRoleEnum::RESELLER
-                )
-                    <x-button href="{{ route('users.create') }}">Create</x-button>
-                @endif
+                <x-button href="{{ route('users.create') }}">Create</x-button>
             </div>
         </div>
         @if( !empty($items) && count($items) )
