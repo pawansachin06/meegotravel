@@ -4,6 +4,8 @@ use App\Http\Controllers\SimController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\RechargeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,5 +71,10 @@ Route::middleware('auth.adminOrReseller')->group(function(){
     Route::resource('/dashboard/users', UserController::class, [
         'name' => 'users'
     ]);
-
+    Route::resource('/dashboard/withdrawals', WithdrawalController::class, [
+        'name' => 'withdrawals'
+    ]);
+    Route::resource('/dashboard/recharges', RechargeController::class, [
+        'name' => 'recharges'
+    ]);
 });
