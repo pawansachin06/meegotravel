@@ -77,6 +77,68 @@
     }
 
 
-
+    var appDeleteForms = document.querySelectorAll('[data-js="app-delete-form"]');
+    if(appDeleteForms){
+        for (var i = 0; i < appDeleteForms.length; i++) {
+            appDeleteForms[i].addEventListener('submit', function(e){
+                e.preventDefault();
+                if (typeof Swal !== 'function') {
+                    Toastify({
+                        text: 'Sweet Alert library not connected',
+                        className: 'toast-error',
+                        position: 'center',
+                    }).showToast();
+                    return false;
+                }
+                var _appDeleteForm = this;
+                Swal.fire({
+                    title: 'Are you sure to delete?',
+                    text: 'This action can not be undone.',
+                    showCancelButton: true,
+                    cancelButtonText: 'Close',
+                    confirmButtonText: 'Yes, Delete',
+                    showLoaderOnConfirm: true,
+                    reverseButtons: true,
+                    preConfirm: function () {
+                        return new Promise(function (resolve, reject) {
+                            Swal.disableButtons();
+                            axios.delete(_appDeleteForm.getAttribute('action')).then(function (res) {
+                                Toastify({
+                                    text: res.data.message ? res.data.message : 'Deleted successfully',
+                                    className: (res.data?.success) ? 'toast-success' : 'toast-error',
+                                    position: 'center',
+                                }).showToast();
+                                if(res.data.reload){
+                                    window.location.reload();
+                                }
+                            }).catch(function (err) {
+                                dev && console.log(err);
+                                var msg = 'An error occurred, try later';
+                                if (err?.response?.data?.message) {
+                                    msg = err.response.data.message;
+                                } else if (err?.message) {
+                                    msg = err.message;
+                                }
+                                Toastify({
+                                    text: msg,
+                                    className: 'toast-error',
+                                    position: 'center',
+                                }).showToast();
+                            }).finally(function () {
+                                resolve(true);
+                            });
+                        });
+                    },
+                    allowOutsideClick: function () {
+                        return !Swal.isLoading();
+                    },
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        Swal.showLoading();
+                    }
+                });
+            });
+        }
+    }
 
 })();

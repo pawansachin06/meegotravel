@@ -85,5 +85,32 @@ class User extends Authenticatable
             }
         });
     }
+
+    public function isAdmin()
+    {
+        if($this->role == UserRoleEnum::ADMIN){
+            return true;
+        }
+        return false;
+    }
+
+    public function isReseller()
+    {
+        if($this->role == UserRoleEnum::RESELLER){
+            return true;
+        }
+        return false;
+    }
+
+    public function isAdminOrReseller()
+    {
+        if(
+            $this->role == UserRoleEnum::ADMIN ||
+            $this->role == UserRoleEnum::RESELLER
+        ) {
+            return true;
+        }
+        return false;
+    }
 }
 

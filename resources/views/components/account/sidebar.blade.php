@@ -17,11 +17,6 @@
         </div>
     </div>
     <div>
-        @if( auth()->user()->role == \App\Enums\UserRoleEnum::ADMIN )
-            <a href="{{ route('users.index') }}" class=" block px-3 py-2 hover:bg-primary-50">Users</a>
-        @endif
-
-        <hr />
         <form method="POST" action="{{ route('logout') }}" class="block w-full">
             @csrf
             <button type="submit" class="text-left text-red-600 block w-full px-3 py-3 leading-none hover:bg-gray-50">{{ __('Log out') }}</button>

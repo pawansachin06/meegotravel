@@ -22,6 +22,14 @@ class UserController extends Controller
         ]);
     }
 
+    public function dashboardOverview(Request $req)
+    {
+        $currentUser = $req->user();
+        return view('pages.dashboard-overview', [
+            'currentUser' => $currentUser,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -32,6 +40,7 @@ class UserController extends Controller
         if($currentUser->role == UserRoleEnum::ADMIN){
         } else if($currentUser->role == UserRoleEnum::RESELLER){
             $query = $query->where('role', UserRoleEnum::USER);
+            $query = $query->where('referral_code', $currentUser->unique_code);
         } else {
             $query = $query->where('id', $currentUser->id);
         }
@@ -69,6 +78,10 @@ class UserController extends Controller
             $validated['role'] = UserRoleEnum::USER;
         }
 
+        if($currentUser->role == UserRoleEnum::RESELLER){
+            $validated['referral_code'] = $currentUser->unique_code;
+        }
+
         $validated['password'] = Hash::make($validated['password']);
 
         try {
@@ -96,8 +109,15 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Request $req, User $user)
     {
+        $currentUser = $req->user();
+        if($currentUser->role == UserRoleEnum::RESELLER){
+            if($user->referral_code != $currentUser->unique_code){
+                abort(403, 'Access denied');
+            }
+        }
+
         return view('users.edit', [
             'item' => $user,
             'roles' => UserRoleEnum::toArray(),
@@ -141,8 +161,42 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $req, User $user)
     {
-        //
+        $currentUser = $req->user();
+        if($currentUser->isAdmin()){
+            if($currentUser->id == $user->id){
+                return response()->json(['success'=> false, 'message'=> 'Can not deleted self account']);
+            } else {
+                try {
+                    $user->delete();
+                } catch( Exception $e) {
+                    return response()->json(['success' => false, 'message'=> $e->getMessage()]);
+                }
+                return response()->json(['success'=> true, 'reload' => true, 'message'=> 'Deleted user']);
+            }
+        } else if($currentUser->isReseller()){
+            if($user->isAdmin()){
+                return response()->json(['success'=> false, 'message'=> 'Can not delete admin user']);
+            } else if ($user->isReseller()) {
+                return response()->json(['success'=> false, 'message'=> 'Can not delete reseller user']);
+            } else if($user->referral_code !== $currentUser->unique_code){
+                return response()->json(['success'=> false, 'message'=> 'Can not delete user of another reseller']);
+            }
+
+            if($user->referral_code == $currentUser->unique_code){
+                try {
+                    $user->delete();
+                } catch(Exception $e){
+                    return response()->json(['success'=> false, 'message'=> $e->getMessage()]);
+                }
+                return response()->json(['success'=> true, 'reload' => true, 'message'=> 'Deleted user']);
+            } else {
+                return response()->json(['success'=> false, 'message'=> 'User is not assigned to you']);
+            }
+
+        } else {
+            return response()->json(['success'=> false, 'message'=> 'Permission not allowed']);
+        }
     }
 }

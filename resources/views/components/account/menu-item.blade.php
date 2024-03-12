@@ -1,4 +1,8 @@
-<a href="{{ route('troubleshoot') }}" class="flex px-2 py-2 gap-2 justify-between items-center rounded shadow bg-white">
+@props([
+    'href' => '',
+])
+
+<a href="{{ $href }}" class="flex px-2 py-2 gap-2 justify-between items-center rounded shadow bg-white">
     <span class="inline-flex gap-2">
         @if( !empty($icon) ) {{ $icon }} @endif
         <span>{{ $slot }}</span>

@@ -6,6 +6,16 @@
             </div>
             <div class="w-full sm:w-6/12 md:w-7/12 lg:w-8/12 xl:w-9/12 px-2 mb-4">
                 <div class="flex flex-wrap">
+                    @if( auth()->user()->isAdminOrReseller() )
+                        <div class="w-full lg:w-6/12 xl:w-4/12 px-1 mb-2">
+                            <x-account.menu-item href="{{ route('dashboard.overview') }}">
+                                <x-slot name="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6 text-gray-700" width="24" height="24" viewBox="0 -960 960 960"><path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
+                                </x-slot>
+                                Dashboard
+                            </x-account.menu-item>
+                        </div>
+                    @endif
                     <div class="w-full lg:w-6/12 xl:w-4/12 px-1 mb-2">
                         <x-account.menu-item href="{{ route('troubleshoot') }}">
                             <x-slot name="icon">

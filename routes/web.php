@@ -50,12 +50,6 @@ Route::get('/esim', function(){
 // ]);
 
 
-Route::resource('/dashboard/users', UserController::class, [
-    'name' => 'users'
-]);
-
-
-
 
 
 Route::middleware([
@@ -65,4 +59,13 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])
         ->name('dashboard');
+});
+
+
+Route::middleware('auth.adminOrReseller')->group(function(){
+    Route::get('/dashboard/overview', [UserController::class, 'dashboardOverview'])->name('dashboard.overview');
+    Route::resource('/dashboard/users', UserController::class, [
+        'name' => 'users'
+    ]);
+
 });
