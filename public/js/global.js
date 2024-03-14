@@ -39,6 +39,12 @@
                 e.preventDefault();
                 let form = this;
                 let data = new FormData(form);
+                if(typeof tinyMCE == 'object'){
+                    var myContentEl = tinyMCE?.get('my-tinymce-editor');
+                    if(myContentEl){
+                        data.append('content', myContentEl.getContent());
+                    }
+                }
                 let url = form.getAttribute('action');
                 let submitBtn = form.querySelector('[data-js="app-form-btn"]');
                 let submitStatus = form.querySelector('[data-js="app-form-status"]');
@@ -71,6 +77,45 @@
                 }).finally(function () {
                     submitBtn.disabled = false;
                     submitBtnLoader.classList.add('hidden');
+                });
+            });
+        }
+    }
+
+
+    var appCreateForms = document.querySelectorAll('[data-js="app-create-form"]');
+    if (appCreateForms) {
+        for (var i = 0; i < appCreateForms.length; i++) {
+            appCreateForms[i].addEventListener('submit', function (e) {
+                e.preventDefault();
+                let form = this;
+                let submitBtn = form.querySelector('[data-js="app-form-btn"]');
+                submitBtn.disabled = true;
+                let submitBtnLoader = submitBtn.querySelector('[data-js="btn-loader"]');
+                submitBtnLoader?.classList.remove('hidden');
+                let url = form.getAttribute('action');
+                let data = new FormData(form);
+                axios.post(url, data).then(function (res) {
+                    Toastify({
+                        text: (res.data?.message) ? res.data.message : 'An error occurred',
+                        className: (res.data?.success) ? 'toast-success' : 'toast-error',
+                        position: 'center',
+                    }).showToast();
+                    if (res.data.redirect) {
+                        window.location.href = res.data.redirect;
+                    }
+                    dev && console.log('appCreateForms: ', res.data);
+                }).catch(function (err) {
+                    let errMsg = getAxiosError(err);
+                    Toastify({
+                        text: errMsg,
+                        className: 'toast-error',
+                        position: 'center',
+                    }).showToast();
+                    dev && console.log(err);
+                }).finally(function () {
+                    submitBtn.disabled = false;
+                    submitBtnLoader?.classList.add('hidden');
                 });
             });
         }

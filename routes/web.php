@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ArticleCategoryController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SocialLoginController;
@@ -32,10 +34,9 @@ Route::middleware('guest')->group(function () {
     ]);
 });
 
-Route::get('/blog', function(){
-    $breadcrumbs = [ ['name'=> 'Blog', 'link'=> '/blog'] ];
-    return view('articles.index', ['breadcrumbs' => $breadcrumbs]);
-})->name('articles.index');
+Route::get('/blog', [ArticleController::class, 'frontIndex'])->name('articles.front.index');
+Route::get('/blog/category/{idOrSlug}', [ArticleCategoryController::class, 'frontShow'])->name('articles-categories.front.show');
+Route::get('/blog/{idOrSlug}', [ArticleController::class, 'frontShow'])->name('articles.front.show');
 
 Route::get('/check-usage', [PageController::class, 'check_usage'])->name('check-usage');
 Route::get('/faqs', [PageController::class, 'faqs'])->name('faqs');
@@ -78,3 +79,14 @@ Route::middleware('auth.adminOrReseller')->group(function(){
         'name' => 'recharges'
     ]);
 });
+
+Route::middleware('auth.admin')->group(function(){
+    Route::resource('/dashboard/articles', ArticleController::class, [
+        'name' => 'articles'
+    ]);
+    Route::resource('/dashboard/article-categories', ArticleCategoryController::class, [
+        'name' => 'article-categories'
+    ]);
+});
+
+

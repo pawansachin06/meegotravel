@@ -2,6 +2,7 @@
     'aos' => 0,
     'swiper' => 0,
     'sweetalert' => 0,
+    'tinymce' => 0,
     'title' => 'Meego Travel',
     'description' => 'Meego Travel site',
 ])
@@ -101,6 +102,18 @@
                             <span>Users</span>
                         </a>
 
+                        @if( auth()->user()->isAdmin() )
+                            <a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.index') ? 'text-primary-800 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }} flex px-2 py-2 border-b items-center gap-2 font-medium">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-5 w-5" width="24" height="24" viewBox="0 -960 960 960"><path d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
+                                <span>Articles</span>
+                            </a>
+
+                            <a href="{{ route('article-categories.index') }}" class="{{ request()->routeIs('article-categories.index') ? 'text-primary-800 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }} flex px-2 py-2 border-b items-center gap-2 font-medium">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-5 w-5" width="24" height="24" viewBox="0 -960 960 960"><path d="m260-520 220-360 220 360H260ZM700-80q-75 0-127.5-52.5T520-260q0-75 52.5-127.5T700-440q75 0 127.5 52.5T880-260q0 75-52.5 127.5T700-80Zm-580-20v-320h320v320H120Zm580-60q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm-500-20h160v-160H200v160Zm202-420h156l-78-126-78 126Zm78 0ZM360-340Zm340 80Z"/></svg>
+                                <span>Article Categories</span>
+                            </a>
+                        @endif
+
                         <a href="{{ route('dashboard.support') }}" class="{{ request()->routeIs('dashboard.support') ? 'text-primary-800 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }} flex px-2 py-2 border-b items-center gap-2 font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-5 w-5" width="24" height="24" viewBox="0 -960 960 960"><path d="M200-160q-33 0-56.5-23.5T120-240v-280q0-74 28.5-139.5T226-774q49-49 114.5-77.5T480-880q74 0 139.5 28.5T734-774q49 49 77.5 114.5T840-520v400q0 33-23.5 56.5T760-40H520q-17 0-28.5-11.5T480-80q0-17 11.5-28.5T520-120h240v-40h-80q-33 0-56.5-23.5T600-240v-160q0-33 23.5-56.5T680-480h80v-40q0-116-82-198t-198-82q-116 0-198 82t-82 198v40h80q33 0 56.5 23.5T360-400v160q0 33-23.5 56.5T280-160h-80Zm0-80h80v-160h-80v160Zm480 0h80v-160h-80v160ZM200-400h80-80Zm480 0h80-80Z"/></svg>
                             <span>Contact Support</span>
@@ -140,6 +153,22 @@
         <script defer src="/js/lib/sweetalert2.min.js?v=11.9.0"></script>
     @endif
     <script defer src="/js/lib/toastify.min.js?v={{ config('app.version') }}"></script>
+
+    @if(!empty($tinymce))
+        <script src="/js/lib/tinymce/tinymce.min.js?v={{ config('app.version') }}" ></script>
+        <script type="text/javascript">
+            (function(){
+                tinymce.init({
+                    selector: '#my-tinymce-editor',
+                    plugins: 'table lists',
+                    placeholder: 'Type here...',
+                    toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table',
+                    content_css: '/css/lib/mce.css',
+                });
+            })();
+        </script>
+    @endif
+
     <script defer src="/js/utils.js?v={{ config('app.version') }}"></script>
     <script defer src="/js/global.js?v={{ config('app.version') }}"></script>
 </body>

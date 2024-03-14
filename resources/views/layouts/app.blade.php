@@ -106,7 +106,7 @@
                 <x-sidebar.menu-item href="{{ route('home') }}" :active="request()->routeIs('home')">New eSIMs</x-sidebar.menu-item>
                 <x-sidebar.menu-item href="{{ route('topup') }}" :active="request()->routeIs('topup')">Topup</x-sidebar.menu-item>
                 <x-sidebar.menu-item href="{{ route('check-usage') }}" :active="request()->routeIs('check-usage')">Check Usage</x-sidebar.menu-item>
-                <x-sidebar.menu-item href="{{ route('articles.index') }}" :active="request()->routeIs('articles.index')">Blog</x-sidebar.menu-item>
+                <x-sidebar.menu-item href="{{ route('articles.front.index') }}" :active="request()->routeIs('articles.front.index')">Blog</x-sidebar.menu-item>
                 <x-sidebar.menu-item href="{{ route('troubleshoot') }}" :active="request()->routeIs('troubleshoot')">Help & Support</x-sidebar.menu-item>
                 <x-sidebar.menu-item href="{{ route('faqs') }}" :active="request()->routeIs('faqs')">FAQs</x-sidebar.menu-item>
             </div>
