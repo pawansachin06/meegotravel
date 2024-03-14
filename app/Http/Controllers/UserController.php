@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CommissionTypeEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use Exception;
@@ -63,7 +64,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('users.create', [
+            'user_roles' => UserRoleEnum::toArray(),
+            'commission_types' => CommissionTypeEnum::toArray(),
+        ]);
     }
 
     /**
@@ -80,6 +84,8 @@ class UserController extends Controller
             'phone' => ['nullable', 'string', 'max:255'],
             'role' => [new Enum(UserRoleEnum::class)],
             'password' => ['string', 'max:26'],
+            'commission' => ['nullable', 'numeric'],
+            'commission_type' => ['nullable', new Enum(CommissionTypeEnum::class)],
             'referral_code' => ['nullable', 'string', 'max:255',],
             'unique_code' => ['nullable', 'string', 'max:255', Rule::unique(User::class)],
         ]);
@@ -127,10 +133,10 @@ class UserController extends Controller
                 abort(403, 'Access denied');
             }
         }
-
         return view('users.edit', [
             'item' => $user,
-            'roles' => UserRoleEnum::toArray(),
+            'commission_types' => CommissionTypeEnum::toArray(),
+            'user_roles' => UserRoleEnum::toArray(),
         ]);
     }
 
@@ -142,17 +148,27 @@ class UserController extends Controller
         $currentUser = $req->user();
         $item = $user;
         $req->merge(['email' => strtolower($req['email']) ]);
-        $validated = $req->validate([
+
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['nullable', 'string', 'max:255'],
             'email' => ['string', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:255'],
-            'role' => [new Enum(UserRoleEnum::class)],
             'referral_code' => ['nullable', 'string', 'max:255',],
             'unique_code' => ['nullable', 'string', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-        ]);
+        ];
 
-        if($currentUser != UserRoleEnum::ADMIN) {
+        if($currentUser->isAdmin()){
+            $rules['commission'] = ['numeric'];
+            $rules['role'] = [new Enum(UserRoleEnum::class)];
+            $rules['commission_type'] = [new Enum(CommissionTypeEnum::class)];
+        }
+
+        $validated = $req->validate($rules);
+
+        if(!$currentUser->isAdmin()) {
+            // if not admin then either reseller or user,
+            // and they can only make another user
             $validated['role'] = UserRoleEnum::USER;
         }
 

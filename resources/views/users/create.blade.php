@@ -10,25 +10,25 @@
         </div>
         <form action="{{ route('users.store') }}" method="post" data-js="app-form">
             <div class="flex flex-wrap -mx-1">
-                <div class="w-full lg:w-6/12 px-1 mb-2">
+                <div class="w-full sm:w-6/12 px-1 mb-2">
                     <div class="flex flex-col">
                         <span>Name</span>
                         <input type="text" name="name" value="" required class="rounded focus:border-primary-500 focus:ring-primary-400" />
                     </div>
                 </div>
-                <div class="w-full lg:w-6/12 px-1 mb-2">
+                <div class="w-full sm:w-6/12 px-1 mb-2">
                     <div class="flex flex-col">
                         <span>Surname</span>
                         <input type="text" name="lastname" value="" class="rounded focus:border-primary-500 focus:ring-primary-400" />
                     </div>
                 </div>
-                <div class="w-full lg:w-6/12 px-1 mb-2">
+                <div class="w-full sm:w-6/12 px-1 mb-2">
                     <div class="flex flex-col">
                         <span>Email</span>
                         <input type="email" name="email" value="" required autocomplete="off" class="rounded focus:border-primary-500 focus:ring-primary-400" />
                     </div>
                 </div>
-                <div class="w-full lg:w-6/12 px-1 mb-2">
+                <div class="w-full sm:w-6/12 px-1 mb-2">
                     <div class="flex flex-col">
                         <span>Password</span>
                         <div x-data="{show: false}" class="relative">
@@ -51,31 +51,49 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full lg:w-6/12 px-1 mb-2">
-                    <div class="flex flex-col">
-                        <span>Unique Code</span>
-                        <input type="text" name="unique_code" value="" class="rounded focus:border-primary-500 focus:ring-primary-400" />
+                @if( auth()->user()->isAdmin() )
+                    <div class="w-full sm:w-6/12 px-1 mb-2">
+                        <div class="flex flex-col">
+                            <span>Unique Code</span>
+                            <input type="text" name="unique_code" value="" class="rounded focus:border-primary-500 focus:ring-primary-400" />
+                        </div>
                     </div>
-                </div>
-                @if( auth()->user()->role == \App\Enums\UserRoleEnum::ADMIN )
-                    <div class="w-full lg:w-6/12 px-1 mb-2">
+                    <div class="w-full sm:w-6/12 px-1 mb-2">
                         <div class="flex flex-col">
                             <span>Referral Code</span>
                             <input type="text" name="referral_code" value="" class="rounded focus:border-primary-500 focus:ring-primary-400" />
                         </div>
                     </div>
-                @endif
-                @if( auth()->user()->role == \App\Enums\UserRoleEnum::ADMIN )
-                    <div class="w-full lg:w-6/12 px-1 mb-2">
+                    @if( !empty($user_roles) )
+                    <div class="w-full sm:w-6/12 px-1 mb-2">
                         <div class="flex flex-col">
                             <span>Role</span>
                             <select name="role" class="rounded focus:border-primary-500 focus:ring-primary-400">
-                                <option value="{{ \App\Enums\UserRoleEnum::RESELLER }}">Reseller</option>
-                                <option value="{{ \App\Enums\UserRoleEnum::USER }}">User</option>
-                                <option value="{{ \App\Enums\UserRoleEnum::ADMIN }}">Admin</option>
+                                @foreach($user_roles as $user_role)
+                                    <option value="{{ $user_role }}">{{ $user_role }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
+                    @endif
+                    @if( !empty($commission_types) )
+                        <div class="w-full sm:w-6/12 px-1 mb-2">
+                            <div class="flex flex-col">
+                                <span>Commission Type <small>(required for Reseller)</small></span>
+                                <select name="commission_type" class="rounded focus:border-primary-500 focus:ring-primary-400">
+                                    @foreach($commission_types as $commission_type)
+                                        <option value="{{ $commission_type }}">{{ $commission_type }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w-full sm:w-6/12 px-1 mb-2">
+                            <div class="flex flex-col">
+                                <span>Commission Value <small>(required for Reseller)</small></span>
+                                <input type="number" name="commission" value="" class="rounded focus:border-primary-500 focus:ring-primary-400" />
+                            </div>
+                        </div>
+                    @endif
                 @endif
                 <div class="w-full px-1">
                     <div data-js="app-form-status" class="hidden font-semibold hidden w-full mb-2"></div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CommissionTypeEnum;
 use App\Enums\UserRoleEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +19,8 @@ return new class extends Migration
             $table->string('lastname')->nullable();
             $table->string('username')->unique()->nullable();
             $table->string('role')->default(UserRoleEnum::USER);
+            $table->decimal('commission', 8, 2)->unsigned()->default(0);
+            $table->string('commission_type')->default(CommissionTypeEnum::FIXED);
             $table->string('phone_prefix')->nullable();
             $table->string('phone_country')->nullable();
             $table->string('phone')->nullable();

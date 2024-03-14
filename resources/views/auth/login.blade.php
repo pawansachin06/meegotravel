@@ -19,7 +19,7 @@
 
 
         <div class="mb-6 rounded text-center border border-red-500">
-            email: admin@admin.com<br>
+            username: admin<br>
             password: password
         </div>
 
@@ -34,7 +34,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <x-float.input id="email" name="email" type="email" value="{{ old('email') }}" autofocus required label="Email" placeholder="Email" class="mb-5" />
+            <x-float.input id="email" name="email" type="text" value="{{ old('email') }}" autofocus required label="Email" placeholder="Email" class="mb-5" />
             <x-float.input id="password" name="password" type="password" value="" required label="Password" placeholder="Password" class="mb-4" />
 
             <div class="flex items-center justify-between mb-2">

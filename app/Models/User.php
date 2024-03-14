@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CommissionTypeEnum;
 use App\Enums\UserRoleEnum;
 use App\Traits\UuidTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -32,7 +33,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'lastname', 'email', 'password', 'profile_photo_path',
-        'email_verified_at', 'role', 'referral_code', 'unique_code'
+        'email_verified_at', 'role', 'referral_code', 'unique_code',
+        'commission', 'commission_type',
     ];
 
     /**
@@ -55,6 +57,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'role' => UserRoleEnum::class,
+        'commission_type' => CommissionTypeEnum::class,
     ];
 
     /**

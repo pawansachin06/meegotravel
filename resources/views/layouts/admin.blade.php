@@ -106,6 +106,14 @@
                             <span>Contact Support</span>
                         </a>
 
+                        <form method="POST" action="{{ route('logout') }}" class="block w-full">
+                            @csrf
+                            <button type="submit" class="text-left w-full text-gray-600 hover:bg-gray-100 flex px-2 py-2 border-b items-center gap-2 font-medium">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-5 w-5" width="24" height="24" viewBox="0 -960 960 960"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>
+                                <span>{{ __('Log out') }}</span>
+                            </button>
+                        </form>
+
 
                     </div>
                     <div class="text-center py-1">
