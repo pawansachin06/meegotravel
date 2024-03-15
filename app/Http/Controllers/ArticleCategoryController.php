@@ -21,9 +21,11 @@ class ArticleCategoryController extends Controller
         $categories = ArticleCategory::withCount('articles')->get(['id', 'slug', 'name']);
 
         $blog_post_ids = [$item->id];
-        $related_items = Article::where('status', ModelStatusEnum::PUBLISHED)->whereHas('categories', function ($q) use ($blog_post_ids) {
-                $q->whereIn('article_category_id', $blog_post_ids);
-        })->get();
+        $related_items = Article::where('status', ModelStatusEnum::PUBLISHED)
+                    ->with('featured_images')
+                    ->whereHas('categories', function ($q) use ($blog_post_ids) {
+                            $q->whereIn('article_category_id', $blog_post_ids);
+                    })->get();
         $breadcrumbs = [
             ['name'=> 'Blog', 'link'=> route('articles.front.index')],
             ['name'=> $item->name, 'link'=> $item->getPermalink()]

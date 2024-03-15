@@ -19,7 +19,7 @@ class ArticleController extends Controller
     public function frontIndex(){
         $perPage = 10;
         $items = Article::where('status', ModelStatusEnum::PUBLISHED)
-                ->with('author')
+                ->with('author')->with('featured_images')
                 ->latest()
                 ->paginate($perPage)->withQueryString();
         $categories = ArticleCategory::where('status', ModelStatusEnum::PUBLISHED)
@@ -35,7 +35,9 @@ class ArticleController extends Controller
 
     public function frontShow(Request $req, $idOrSlug)
     {
-        $item = Article::where('status', ModelStatusEnum::PUBLISHED)->where('slug', $idOrSlug)->orWhere('id', $idOrSlug)->firstOrFail();
+        $item = Article::where('status', ModelStatusEnum::PUBLISHED)
+                ->with('author')->with('featured_images')
+                ->where('slug', $idOrSlug)->orWhere('id', $idOrSlug)->firstOrFail();
         $categories = ArticleCategory::withCount('articles')->get(['id', 'slug', 'name']);
 
         $blog_post_ids = $item->categories->pluck('id')->toArray();

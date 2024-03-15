@@ -29,26 +29,11 @@ class Article extends Model
     }
 
     public function getFeaturedImage(){
-        // $assets = $this->assets;
-        // try {
-        //     $assets = json_decode($assets, true);
-        // } catch(Exception $e) {
-        //     $assets = [];
-        // }
-        // $coverImage = '';
-        // if( !empty($assets) && count($assets) ){
-        //     foreach ($assets as $asset) {
-        //         if($asset['type'] == 'image'){
-        //             $coverImage = $asset['filename'];
-        //             break;
-        //         }
-        //     }
-        // }
-        // if(!empty($coverImage)){
-        //     return '/storage/blogs/' . $this->folder . '/' . $coverImage;
-        // } else {
-            return 'https://dummyimage.com/360x360';
-        // }
+        if(!empty($this->featured_images) && count($this->featured_images)){
+            $featured_image = $this->featured_images->first();
+            return '/storage/' . $featured_image->folder . '/' . $featured_image->name;
+        }
+        return 'https://dummyimage.com/360x360';
     }
 
     public function author(){
@@ -62,5 +47,9 @@ class Article extends Model
 
     public function photos(){
         return $this->morphMany(Photo::class, 'photoable');
+    }
+
+    public function featured_images(){
+        return $this->photos()->where('tag', 'featured_image')->latest();
     }
 }

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-page-banner :$breadcrumbs title="{{ $item->name }}" />
+    <x-page-banner :$breadcrumbs title="{{ $item->name }}" image="{{ $item->getFeaturedImage() }}" />
     <div class="container px-3 py-4">
         <div class="flex flex-wrap lg:flex-row-reverse -mx-3 px-1 py-3">
             <div class="w-full lg:w-8/12 px-2">
