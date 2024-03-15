@@ -44,6 +44,15 @@
                         <textarea name="excerpt" rows="2" class="rounded focus:border-primary-500 focus:ring-primary-400">{{ $item->excerpt }}</textarea>
                     </div>
                 </div>
+                <div class="w-full sm:w-6/12 px-1 mb-2">
+                    <div class="flex flex-col">
+                        <span>Featured Image</span>
+                        <input type="file" name="featured_image" data-js="preview-img-input" data-target-img="preview_featured_image" accept=".jpg,.jpeg,.png,.gif" class="block w-full rounded file:mr-2 file:px-3 file:py-2 file:border-0 border border-gray-500 file:bg-gray-200 hover:file:bg-gray-100 file:cursor-pointer focus:outline-primary-400 focus:border-primary-500 cursor-pointer bg-white" />
+                    </div>
+                </div>
+                <div class="w-full sm:w-6/12 px-1 mb-2">
+                    <img src="{{ !empty($featured_image) ? '/storage/' . $featured_image->folder . '/' . $featured_image->name : 'https://dummyimage.com/50x50/ffffff/ffffff' }}" id="preview_featured_image" class="w-full h-20 rounded border border-gray-500 object-center object-cover" />
+                </div>
                 @if( !empty($categories) && count($categories) )
                     <div class="w-full px-1 mb-2">
                         <div class="">

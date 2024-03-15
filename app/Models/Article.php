@@ -59,4 +59,8 @@ class Article extends Model
     {
         return $this->belongsToMany(ArticleCategory::class, 'article_pivot_article_category', 'article_id', 'article_category_id');
     }
+
+    public function photos(){
+        return $this->morphMany(Photo::class, 'photoable');
+    }
 }

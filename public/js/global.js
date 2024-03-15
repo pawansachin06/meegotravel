@@ -64,6 +64,14 @@
                         className: (res.data?.success) ? 'toast-success' : 'toast-error',
                         position: 'center',
                     }).showToast();
+                    if(res.data?.success){
+                        var previewImgInputs = document.querySelectorAll('[data-js="preview-img-input"]');
+                        if(previewImgInputs){
+                            for (var k = 0; k < previewImgInputs.length; k++) {
+                                previewImgInputs[k].value = '';
+                            }
+                        }
+                    }
                     dev && console.log('appForms: ', res.data);
                 }).catch(function (err) {
                     let msg = getAxiosError(err);
@@ -182,6 +190,24 @@
                         Swal.showLoading();
                     }
                 });
+            });
+        }
+    }
+
+
+    var previewImgInputs= document.querySelectorAll('[data-js="preview-img-input"]');
+    if(previewImgInputs){
+        for (var i = 0; i < previewImgInputs.length; i++) {
+            previewImgInputs[i].addEventListener('change', function(e){
+                var el = this;
+                if(e.target.files[0]){
+                    var targetKey = el.getAttribute('data-target-img');
+                    var targetEl = document.getElementById(targetKey);
+                    if(targetEl){
+                        var previewURL = URL.createObjectURL(e.target.files[0]);
+                        targetEl.src = previewURL;
+                    }
+                }
             });
         }
     }

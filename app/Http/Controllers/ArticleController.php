@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use Hidehalo\Nanoid\Client;
 use App\Enums\ModelStatusEnum;
 use App\Models\ArticleCategory;
+use App\Models\Photo;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -114,8 +116,10 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         $categories = ArticleCategory::where('status', ModelStatusEnum::PUBLISHED)->get(['id', 'slug', 'name']);
+        $featured_image = $article->photos()->where('tag', 'featured_image')->first();
         return view('articles.edit', [
             'item' => $article,
+            'featured_image' => $featured_image,
             'categories' => $categories,
         ]);
     }
@@ -133,7 +137,9 @@ class ArticleController extends Controller
             'content' => ['nullable', 'string'],
             'excerpt' => ['nullable', 'string', 'max:255'],
             'order' => ['required', 'numeric', 'gt:-1'],
+            'featured_image' => ['nullable', 'file', 'max:2000'],
         ]);
+
         try {
             $currentUser = $req->user();
             $validated['user_id'] = $currentUser->id;
@@ -146,6 +152,35 @@ class ArticleController extends Controller
                 'errors' => [],
             ], 500);
         }
+
+        if($req->hasFile('featured_image')){
+            $folder = 'articles/' . date('Y/m');
+            $featured_image = $req->file('featured_image');
+            $featured_image_filename = $article->id . '-' . date('Y-m-d-H-i-s') . '.' . $featured_image->extension();
+            $featured_image->storeAs($folder, $featured_image_filename, 'public');
+            $old_featured_image = $article->photos()->where('tag', 'featured_image')->first();
+            try {
+                Photo::create([
+                    'photoable_id' => $article->id,
+                    'photoable_type' => Article::class,
+                    'name' => $featured_image_filename,
+                    'folder' => $folder,
+                    'tag' => 'featured_image',
+                ]);
+
+                if(!empty($old_featured_image)){
+                    Storage::delete('/public/' . $old_featured_image->folder . '/' . $old_featured_image->name);
+                    $old_featured_image->delete();
+                }
+            } catch(Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                    'errors' => [],
+                ], 500);
+            }
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Article updated successfully'
