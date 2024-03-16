@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Enums\CommissionTypeEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use Exception;
-use Hidehalo\Nanoid\Client;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Enum;
+use App\Services\AiraloApi;
 
 class UserController extends Controller
 {
+    protected $airaloApi;
+
+    public function __construct(AiraloApi $airaloApi)
+    {
+        $this->airaloApi = $airaloApi;
+    }
 
     public function dashboard(Request $req)
     {

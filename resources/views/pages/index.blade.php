@@ -96,11 +96,15 @@
     <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM offers</h2>
     <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
     <div class="flex flex-wrap -mx-2 mb-8">
-        @for($i = 0; $i < 9; $i++)
-        <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
-            <x-sims.card />
-        </div>
-        @endfor
+        @foreach($packages as $package)
+            @if(!empty($package['operators']))
+                @foreach($package['operators'] as $operator)
+                    <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
+                        <x-sims.card :operator="$operator" />
+                    </div>
+                @endforeach
+            @endif
+        @endforeach
     </div>
 
     </div>

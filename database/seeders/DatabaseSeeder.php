@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Enums\SettingTypeEnum;
 use App\Enums\UserRoleEnum;
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +24,18 @@ class DatabaseSeeder extends Seeder
             'role' => UserRoleEnum::ADMIN,
             'email' => 'admin@admin.com',
         ]);
+
+        $settings = [
+            ['key' => 'airalo_client_id', 'type' => SettingTypeEnum::NORMAL ],
+            ['key' => 'airalo_client_secret', 'type' => SettingTypeEnum::NORMAL ],
+            ['key' => 'airalo_env', 'type' => SettingTypeEnum::DROPDOWN ],
+        ];
+        foreach ($settings as $setting) {
+            Setting::updateOrCreate(
+                [ 'key' => $setting['key'] ],
+                [ 'value' => '', 'type' => $setting['type'] ]
+            );
+        }
+
     }
 }

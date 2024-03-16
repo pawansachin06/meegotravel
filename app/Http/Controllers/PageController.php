@@ -2,11 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AiraloApi;
 use Illuminate\Http\Request;
 use Exception;
 
 class PageController extends Controller
 {
+    protected $airaloApi;
+
+    public function __construct(AiraloApi $airaloApi)
+    {
+        $this->airaloApi = $airaloApi;
+    }
+
+    public function index(Request $req)
+    {
+        $packages = $this->airaloApi->getPackages();
+        $dev = !empty($req->dev) ? true : false;
+        if(!empty($dev)){
+            dd($packages);
+        }
+        return view('pages.index', ['packages' => @$packages['data']]);
+    }
+
     public function check_usage(Request $req)
     {
         $breadcrumbs = [ ['name'=> 'Check Usage', 'link'=> route('check-usage')] ];

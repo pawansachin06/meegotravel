@@ -8,6 +8,7 @@ use App\Http\Controllers\SocialLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\RechargeController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-})->name('home');
+Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login/redirect/google', [
@@ -87,6 +86,14 @@ Route::middleware('auth.admin')->group(function(){
     Route::resource('/dashboard/article-categories', ArticleCategoryController::class, [
         'name' => 'article-categories'
     ]);
+    Route::resource('/dashboard/settings', SettingController::class, [
+        'name' => 'settings'
+    ]);
+
+    Route::get('/dashboard/switches', [SettingController::class, 'switches'])
+        ->name('switches.index');
+    Route::post('/dashboard/switches', [SettingController::class, 'save'])
+        ->name('switches.save');
 });
 
 

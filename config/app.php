@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        App\Providers\GlobalFunctionsServiceProvider::class
     ])->toArray(),
 
     /*
@@ -188,4 +189,6 @@ return [
     ])->toArray(),
     'version' => date('d-M-Y-h-i-a'),
     'admin_emails'=> env('ADMIN_EMAILS', 'byvexarvind@gmail.com,pawansachin06@gmail.com'),
+    'airalo_api_production' => env('AIRALO_API_PRODUCTION', 'https://partners-api.airalo.com'),
+    'airalo_api_sandbox' => env('AIRALO_API_SANDBOX', 'https://sandbox-partners-api.airalo.com'),
 ];
