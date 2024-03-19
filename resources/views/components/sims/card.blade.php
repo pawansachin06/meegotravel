@@ -1,5 +1,7 @@
 @props([
-    'operator' => []
+    'operator' => [],
+    'countryCode' => null,
+    'countrySlug' => '',
 ])
 
 <div class="px-2 py-2 shadow-lg rounded-md bg-white">
@@ -42,6 +44,8 @@
         @endif
     </div>
     <div class="">
-        <x-button href="/esim" class="w-full">View Offer</x-button>
+        @if(!empty( $countrySlug ))
+            <x-button href="{{ route('sims.show', ['countrySlug' => $countrySlug]) }}" class="w-full">View Offers</x-button>
+        @endif
     </div>
 </div>

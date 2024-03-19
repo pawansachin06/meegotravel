@@ -100,7 +100,7 @@
             @if(!empty($package['operators']))
                 @foreach($package['operators'] as $operator)
                     <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
-                        <x-sims.card :operator="$operator" />
+                        <x-sims.card :operator="$operator" :countrySlug="$package['slug']" :countryCode="$package['country_code']" />
                     </div>
                 @endforeach
             @endif

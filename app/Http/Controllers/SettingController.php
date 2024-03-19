@@ -27,6 +27,7 @@ class SettingController extends Controller
     {
         $controls = [
             'airalo_env' => ['values' => ['sandbox', 'production']],
+            'paypal_env' => ['values' => ['sandbox', 'production']],
         ];
         $items = Setting::whereIn('key', array_keys($controls))
                 ->where('type', SettingTypeEnum::DROPDOWN)

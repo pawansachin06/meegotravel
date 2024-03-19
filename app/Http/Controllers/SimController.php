@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sim;
+use App\Services\AiraloApi;
+use App\Services\PayPalApi;
 use Illuminate\Http\Request;
 use Exception;
 
 class SimController extends Controller
 {
+    protected $airaloApi;
+    protected $payPalApi;
+
+    public function __construct(
+        AiraloApi $airaloApi, PayPalApi $payPalApi
+    ) {
+        $this->airaloApi = $airaloApi;
+        $this->payPalApi = $payPalApi;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,9 +49,25 @@ class SimController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sim $sim)
+    public function show(Request $req, $countrySlug)
     {
-        //
+        $countryCode = $this->airaloApi->getCountryCodeFromSlug($countrySlug);
+        if(empty($countryCode)) abort(404);
+
+        $res = $this->airaloApi->getPackages([
+            'filter' => [
+                'country' => $countryCode,
+                'limit' => 1,
+            ],
+        ]);
+        $operators = $res['data'][0]['operators'] ?? [];
+        return view('sims.show', [
+            'operators'=> $operators,
+            'countrySlug' => $countrySlug,
+            'title' => $res['data'][0]['title'],
+            'image' => $res['data'][0]['image'],
+            'country_code' => $res['data'][0]['country_code'],
+        ]);
     }
 
     /**
@@ -56,6 +84,12 @@ class SimController extends Controller
     public function update(Request $request, Sim $sim)
     {
         //
+    }
+
+    public function checkout(Request $req)
+    {
+        // return $this->payPalApi->postOrder();
+        return view('sims.checkout');
     }
 
     /**

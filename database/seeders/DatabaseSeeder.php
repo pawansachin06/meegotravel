@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
             ['key' => 'airalo_client_id', 'type' => SettingTypeEnum::NORMAL ],
             ['key' => 'airalo_client_secret', 'type' => SettingTypeEnum::NORMAL ],
             ['key' => 'airalo_env', 'type' => SettingTypeEnum::DROPDOWN ],
+            ['key' => 'paypal_client_id', 'type' => SettingTypeEnum::NORMAL ],
+            ['key' => 'paypal_client_secret', 'type' => SettingTypeEnum::NORMAL ],
+            ['key' => 'paypal_env', 'type' => SettingTypeEnum::DROPDOWN ],
         ];
         foreach ($settings as $setting) {
             Setting::updateOrCreate(

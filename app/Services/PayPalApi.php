@@ -7,141 +7,96 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 
-class AiraloApi
+
+class PayPalApi
 {
     private $apiBase = '';
     private $credentials = [];
     private $token = null;
-    private $version = 'v1';
 
     public function __construct()
     {
-        $keys = ['airalo_client_id', 'airalo_client_secret', 'airalo_env'];
+        $keys = ['paypal_client_id', 'paypal_client_secret', 'paypal_env'];
         $setting = Setting::whereIn('key', $keys)->pluck('value', 'key');
 
-        if (@$setting['airalo_env'] === 'production') {
-            $this->apiBase = config('app.airalo_api_production') . '/' . $this->version;
-        } else {
-            $this->apiBase = config('app.airalo_api_sandbox') . '/' . $this->version;
-        }
+        $this->apiBase = 'https://api-m.sandbox.paypal.com';
 
         $this->credentials = [
-            'client_id' => @$setting['airalo_client_id'],
-            'client_secret' => @$setting['airalo_client_secret'],
-            'grant_type' => 'client_credentials',
+            'client_id' => @$setting['paypal_client_id'],
+            'client_secret' => @$setting['paypal_client_secret'],
         ];
-        $this->token = Cache::get('airalo_token', null);
     }
 
-    public function getCountryCodeFromSlug($countrySlug) : String
+
+    public function postOrder($data = [])
     {
-        $data = [
-            'united-states' => 'US',
-            'france' => 'FR',
-            'china' => 'CN',
-            'spain' => 'ES',
-            'turkey' => 'TR',
-            'united-kingdom' => 'GB',
-            'germany' => 'DE',
-            'mexico' => 'MX',
-            'hong-kong' => 'HK',
-            'malaysia' => 'MY',
-            'greece' => 'GR',
-            'canada' => 'CA',
-            'japan' => 'JP',
-            'singapore' => 'SG',
-            'aruba' => 'AW',
-            'afghanistan' => 'AF',
-            'anguilla' => 'AI',
-            'albania' => 'AL',
-            'united-arab-emirates' => 'AE',
-            'argentina' => 'AR',
-            'armenia' => 'AM',
-            'antigua-and-barbuda' => 'AG',
-            'australia' => 'AU',
-            'austria' => 'AT',
-            'azerbaijan' => 'AZ',
-        ];
-
-        if( isset($data[$countrySlug]) ){
-            return $data[$countrySlug];
-        }
-        return '';
-    }
-
-    public function getSims($data = [
-        'include' => 'order,order.status,order.user',
-    ])
-    {
-        return $this->call('/sims', $data);
-    }
-
-    public function getSim($id, $data = [
-        'include' => 'order,order.status,order.user',
-    ])
-    {
-        return $this->call("/sims/$id", $data);
-    }
-
-    public function getSimDataUsage($id)
-    {
-        return $this->call("/sims/$id/usage");
-    }
-
-    public function getSimAvailableTopups($id)
-    {
-        return $this->call("/sims/$id/topups");
-    }
-
-    public function getSimPackageHistory($id)
-    {
-        // caching => 1 req in every 15 minutes.
-        return $this->call("/sims/$id/packages", [], 'GET', true);
-    }
-
-    public function getOrders($data = ['include' => 'sims,user,status'])
-    {
-        return $this->call("/order", $data);
-    }
-
-    public function getOrder(
-        $id, $data = ['include' => 'sims,user,status',]
-    ) {
-        return $this->call("/order/$id", $data);
-    }
-
-    public function getOrderStatus($page = 1, $limit = 100)
-    {
-        return $this->call('/orders/statuses', [
-            'page' => $page, 'limit' => $limit,
+        $accessToken = $this->getAccessToken();
+        $url = "{$this->apiBase}/v2/checkout/orders";
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $accessToken
         ]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+            'intent' => 'CAPTURE',
+            'purchase_units' => [
+                [
+                    'amount' => [
+                        'currency_code' => 'USD',
+                        'value' => '100'
+                    ]
+                ]
+            ]
+        ]));
+        $res = curl_exec($ch);
+        curl_close($ch);
+        $order = json_decode($res, true);
+        Log::info('PayPal Order', ['res' => $order]);
+        if(!empty($order)){
+            foreach ($order['links'] as $link) {
+                if ($link['rel'] === 'approve') {
+                    // Return the approve link
+                    return response()->json(['url' => $link['href']]);
+                }
+            }
+        }
+
+        // If "approve" link is not found, return an error
+        return response()->json(['error' => 'Approve link not found'], 500);
     }
 
-    public function getOrderStatusName($slug)
+
+    private function getAccessToken()
     {
-        return $this->call("/orders/statuses/$slug");
+        $client_id = $this->credentials['client_id'];
+        $client_secret = $this->credentials['client_secret'];
+        $auth = base64_encode($client_id . ':' . $client_secret);
+        $url = "{$this->apiBase}/v1/oauth2/token";
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Basic ' . $auth]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+        $res = curl_exec($ch);
+        curl_close($ch);
+        $data = json_decode($res, true);
+        Log::info('PayPal Auth', ['res' => $data]);
+        return @$data['access_token'];
     }
 
-    public function getPackages($data = [])
-    {
-        // @TODO 40 requests in every one min.
-        return $this->call('/packages', $data, 'GET', true);
-    }
 
-    public function getCompatibleDevices()
-    {
-        return $this->call('/compatible-devices');
-    }
 
-    public function postTopup($data)
-    {
-        return $this->call('/orders/topups', $data, 'POST');
-    }
 
-    public function postOrder($data)
-    {
-        return $this->call('/orders', $data, 'POST');
-    }
+
+
+
+
+
+
+
+
 
     private function url($action)
     {
@@ -184,7 +139,7 @@ class AiraloApi
                 return $setting['airalo_access_token'];
             }
 
-            $curl = curl_init($this->url('/token'));
+            $curl = curl_init($this->url('/v1/oauth2/token'));
             $result = $this->execCurl($curl, $this->credentials, 'POST');
             $result = @json_decode($result, true);
             if (!empty($result['data']['access_token'])) {
@@ -235,8 +190,13 @@ class AiraloApi
         return $result;
     }
 
-    protected function _call($curl, $data = [], $method = 'GET', $debug = false, $shouldCache = false)
-    {
+    protected function _call(
+        $curl,
+        $data = [],
+        $method = 'GET',
+        $debug = false,
+        $shouldCache = false
+    ) {
         if (!$this->apiBase) {
             throw new Exception('No API base sepecified');
         }
@@ -244,10 +204,10 @@ class AiraloApi
         $info = curl_getinfo($curl);
         $query = http_build_query($data);
         $full_url = $info['url'] . '?' . $query;
-        if($shouldCache){
+        if ($shouldCache) {
             $cacheKey = 'api_cache_' . md5($full_url);
 
-            if(Cache::has($cacheKey)){
+            if (Cache::has($cacheKey)) {
                 Log::info('SERVING CAHCE ', [$full_url]);
                 return Cache::get($cacheKey);
             }
@@ -301,7 +261,7 @@ class AiraloApi
         }
 
         Log::info('API=> ' . $full_url, [$result]);
-        if($shouldCache){
+        if ($shouldCache) {
             // Cache for 60 minutes
             Cache::put($cacheKey, $result, now()->addMinutes(60));
         }
