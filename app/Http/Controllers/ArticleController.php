@@ -28,12 +28,17 @@ class ArticleController extends Controller
         $items = $query->latest()->paginate($perPage)->withQueryString();
         $categories = ArticleCategory::where('status', ModelStatusEnum::PUBLISHED)
                         ->withCount('articles')->get(['id', 'slug', 'name']);
+
+        $recent_items = Article::where('status', ModelStatusEnum::PUBLISHED)
+                        ->latest()->limit(10)->get();
+
         $breadcrumbs = [ ['name'=> 'Blog', 'link'=> route('articles.front.index')] ];
         return view('articles.front.index', [
             'items' => $items,
             'keyword' => $keyword,
             'perPage' => $perPage,
             'categories' => $categories,
+            'recent_items' => $recent_items,
             'breadcrumbs' => $breadcrumbs,
         ]);
     }
@@ -50,7 +55,7 @@ class ArticleController extends Controller
         $related_items = Article::where('status', ModelStatusEnum::PUBLISHED)->where('id', '!=', $item->id)
             ->whereHas('categories', function ($q) use ($blog_post_ids) {
                 $q->whereIn('article_category_id', $blog_post_ids);
-        })->get();
+        })->limit(10)->get();
         $breadcrumbs = [
             ['name'=> 'Blog', 'link'=> route('articles.front.index')],
             ['name'=> 'Blog Details', 'link'=> $item->getPermalink()]

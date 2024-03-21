@@ -52,7 +52,7 @@
                             </div>
                             <div class="flex flex-col">
                                 @foreach($categories as $category)
-                                    <a href="{{ $category->getPermalink() }}" class="inline-flex truncate px-3 py-2 border-b w-full justify-between gap-2 hover:text-primary-500 hover:bg-primary-50">
+                                    <a href="{{ $category->getPermalink() }}" class="inline-flex truncate px-3 py-2 {{ $loop->last ? '' : 'border-b' }} w-full justify-between gap-2 hover:text-primary-500 hover:bg-primary-50">
                                         <span class="inline-block truncate">{{ $category->name }}</span>
                                         <span>{{ $category->articles_count }}</span>
                                     </a>
@@ -60,6 +60,22 @@
                             </div>
                         </div>
                     @endif
+
+                    @if( !empty($related_items) && count($related_items) )
+                        <div class="mb-3 shadow rounded-md bg-white">
+                            <div class="px-3 py-3 border-b">
+                                <h3 class="text-xl font-semibold">Related Articles</h3>
+                            </div>
+                            <div class="flex flex-col">
+                                @foreach($related_items as $related_item)
+                                    <a href="{{ $related_item->getPermalink() }}" class="inline-flex truncate px-3 py-2 {{ $loop->last ? '' : 'border-b' }} w-full justify-between gap-2 hover:text-primary-500 hover:bg-primary-50">
+                                        <span class="inline-block truncate">{{ $related_item->name }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
 
                     <!-- <div class="mb-3 shadow rounded-md bg-white">
                         <div class="px-3 py-3 border-b">
