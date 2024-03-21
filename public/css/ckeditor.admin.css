@@ -1,0 +1,39 @@
+@media(min-width:1024px){
+    .ck.ck-editor { max-width:720px }
+}
+@media(min-width:1050px){
+    .ck.ck-editor { max-width:735px }
+}
+@media(min-width:1070px){
+    .ck.ck-editor { max-width:755px }
+}
+@media(min-width:1090px){
+    .ck.ck-editor { max-width:775px }
+}
+@media(min-width:1100px){
+    .ck.ck-editor { max-width:785px }
+}
+@media(min-width:1120px){
+    .ck.ck-editor { max-width:800px }
+}
+@media(min-width:1140px){
+    .ck.ck-editor { max-width:820px }
+}
+@media(min-width:1180px){
+    .ck.ck-editor { max-width:860px }
+}
+@media(min-width:1200px){
+    .ck.ck-editor { max-width:890px }
+}
+@media(min-width:1220px){
+    .ck.ck-editor { max-width:910px }
+}
+@media(min-width:1240px){
+    .ck.ck-editor { max-width:920px }
+}
+@media(min-width:1260px){
+    .ck.ck-editor { max-width:940px }
+}
+@media(min-width:1290px){
+    .ck.ck-editor { max-width:960px }
+}

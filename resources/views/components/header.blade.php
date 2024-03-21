@@ -46,6 +46,9 @@
                     </button>
                     <div x-ref="panel" x-show="open" x-transition.origin.top.left x-on:click.outside="close($refs.button)" :id="$id('dropdown-button')" style="display:none;" class="absolute right-0 my-1 w-48 rounded-md overflow-hidden bg-white shadow-md">
                         <a href="{{ route('dashboard') }}" class="block px-3 py-3 leading-none {{ request()->routeIs('dashboard') ? 'bg-gray-800 text-white' : 'hover:bg-gray-100' }}">{{ __('My Account') }}</a>
+                        @if( auth()->user()->isAdminOrReseller() )
+                            <a href="{{ route('dashboard.overview') }}" class="block px-3 py-3 leading-none hover:bg-gray-100">{{ __('Dashboard') }}</a>
+                        @endif
                         <hr />
                         <form method="POST" action="{{ route('logout') }}" class="block w-full">
                             @csrf

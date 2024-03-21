@@ -45,6 +45,13 @@
                         data.append('content', myContentEl.getContent());
                     }
                 }
+                if(typeof appCkEditor == 'object'){
+                    var appCkeditorTextarea = document.getElementById('app-ckeditor-textarea');
+                    if(appCkeditorTextarea){
+                        data.append('content', appCkEditor.getData());
+                    }
+                }
+
                 let url = form.getAttribute('action');
                 let submitBtn = form.querySelector('[data-js="app-form-btn"]');
                 let submitStatus = form.querySelector('[data-js="app-form-status"]');

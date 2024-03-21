@@ -1,4 +1,4 @@
-<x-admin-layout tinymce="1">
+<x-admin-layout tinymce="1" ckeditor="1">
     <div class="lg:container px-3 py-3">
         <div class="mb-2 flex flex-wrap justify-between items-center">
             <div class="">
@@ -72,7 +72,9 @@
                 <div class="w-full px-1 mb-2">
                     <div class="flex flex-col">
                         <span>Content</span>
-                        <textarea id="my-tinymce-editor" rows="1" class="hidden">{{ $item->content }}</textarea>
+                        <div class="no-tailwindcss">
+                            <textarea id="app-ckeditor-textarea" class="hidden">{{ $item->content }}</textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="w-full px-1">

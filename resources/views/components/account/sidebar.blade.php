@@ -17,6 +17,11 @@
         </div>
     </div>
     <div>
+        @if( !request()->routeIs('dashboard') )
+            <a href="{{ route('dashboard') }}" class="border-b text-left text-gray-700 block w-full px-3 py-3 leading-none hover:bg-gray-50">Dashboard</a>
+            <a href="{{ route('troubleshoot') }}" class="border-b text-left text-gray-700 block w-full px-3 py-3 leading-none hover:bg-gray-50">Order History</a>
+            <a href="{{ route('troubleshoot') }}" class="border-b text-left text-gray-700 block w-full px-3 py-3 leading-none hover:bg-gray-50">My eSIMs</a>
+        @endif
         <form method="POST" action="{{ route('logout') }}" class="block w-full">
             @csrf
             <button type="submit" class="text-left text-red-600 block w-full px-3 py-3 leading-none hover:bg-gray-50">{{ __('Log out') }}</button>

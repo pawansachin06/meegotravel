@@ -75,7 +75,7 @@ class ArticleCategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'redirect' => route('article-categories.edit', $item) ,
-                'message' => 'Article category created successfully',
+                'message' => 'Loading article category...',
                 'resetForm' => true,
             ]);
         } catch(Exception $e){

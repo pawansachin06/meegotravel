@@ -16,17 +16,22 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    public function frontIndex(){
+    public function frontIndex(Request $req){
         $perPage = 10;
-        $items = Article::where('status', ModelStatusEnum::PUBLISHED)
-                ->with('author')->with('featured_images')
-                ->latest()
-                ->paginate($perPage)->withQueryString();
+        $keyword = $req->s;
+        $query = Article::query();
+        $query = $query->where('status', ModelStatusEnum::PUBLISHED)
+                ->with('author')->with('featured_images');
+        if(!empty($keyword)){
+            $query->where('name', 'like', '%' . $keyword . '%')->orWhere('excerpt', 'like', '%' . $keyword . '%');
+        }
+        $items = $query->latest()->paginate($perPage)->withQueryString();
         $categories = ArticleCategory::where('status', ModelStatusEnum::PUBLISHED)
                         ->withCount('articles')->get(['id', 'slug', 'name']);
         $breadcrumbs = [ ['name'=> 'Blog', 'link'=> route('articles.front.index')] ];
         return view('articles.front.index', [
             'items' => $items,
+            'keyword' => $keyword,
             'perPage' => $perPage,
             'categories' => $categories,
             'breadcrumbs' => $breadcrumbs,
@@ -35,6 +40,7 @@ class ArticleController extends Controller
 
     public function frontShow(Request $req, $idOrSlug)
     {
+        $keyword = $req->s;
         $item = Article::where('status', ModelStatusEnum::PUBLISHED)
                 ->with('author')->with('featured_images')
                 ->where('slug', $idOrSlug)->orWhere('id', $idOrSlug)->firstOrFail();
@@ -47,10 +53,11 @@ class ArticleController extends Controller
         })->get();
         $breadcrumbs = [
             ['name'=> 'Blog', 'link'=> route('articles.front.index')],
-            // ['name'=> 'Blog', 'link'=> route('articles.front.index')]
+            ['name'=> 'Blog Details', 'link'=> $item->getPermalink()]
         ];
         return view('articles.front.show', [
             'item' => $item,
+            'keyword' => $keyword,
             'breadcrumbs' => $breadcrumbs,
             'related_items' => $related_items,
             'categories' => $categories,
@@ -92,7 +99,7 @@ class ArticleController extends Controller
             return response()->json([
                 'success' => true,
                 'redirect' => route('articles.edit', $item) ,
-                'message' => 'Article created successfully',
+                'message' => 'Loading article...',
                 'resetForm' => true,
             ]);
         } catch(Exception $e){

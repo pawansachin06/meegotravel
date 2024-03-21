@@ -3,6 +3,7 @@
     'swiper' => 0,
     'sweetalert' => 0,
     'tinymce' => 0,
+    'ckeditor' => 0,
     'title' => 'Meego Travel',
     'description' => 'Meego Travel site',
 ])
@@ -37,6 +38,11 @@
         <link rel="stylesheet" href="/css/lib/aos.css?v=2.3.1" />
     @endif
 
+    @if(!empty($ckeditor))
+        <link rel="preload" as="style" href="/css/ckeditor.admin.css?v={{ config('app.version') }}" />
+        <link rel="stylesheet" href="/css/ckeditor.admin.css?v={{ config('app.version') }}" />
+    @endif
+
     <link rel="preload" as="style" href="/css/lib/toastify.min.css?v={{ config('app.version') }}" />
     <link rel="stylesheet" href="/css/lib/toastify.min.css?v={{ config('app.version') }}" />
 
@@ -47,15 +53,15 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
 
-    <script defer src="/js/base.js?v={{ config('app.version') }}"></script>
+    <script async defer src="/js/base.js?v={{ config('app.version') }}"></script>
 </head>
 
 <body class="font-sans antialiased bg-gray-50">
     <x-banner />
     <div class="min-h-screen flex flex-col bg-gray-100">
-        <div class="flex grow">
+        <div class="flex grow flex-row">
             <input type="checkbox" id="app-sidebar-checkbox" class="hidden" />
-            <div id="app-sidebar-container" class="flex flex-col">
+            <div id="app-sidebar-container" class="flex flex-col shrink-0">
                 <label id="app-sidebar-overlay" for="app-sidebar-checkbox" class="transition-colors"></label>
                 <div id="app-sidebar" class="flex flex-col bg-white shadow-sm">
                     <div class="flex-none flex px-1 shadow-sm justify-between h-14">
@@ -145,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div id="app-content" class="flex flex-col w-full">
+            <div id="app-content" class="flex flex-col grow-0 shrink w-full max-w-full">
                 @livewire('navigation-menu')
                 <main class="grow">{{ $slot }}</main>
             </div>
@@ -176,6 +182,25 @@
                     toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table',
                     content_css: '/css/lib/mce.css',
                 });
+            })();
+        </script>
+    @endif
+
+    @if(!empty($ckeditor))
+        <script src="/assets/ckeditor5/build/ckeditor.js?v={{ config('app.version') }}"></script>
+        <script type="text/javascript">
+            var appCkEditor = null;
+            (function(){
+                var appCkeditorTextarea = document.getElementById('app-ckeditor-textarea');
+                if(appCkeditorTextarea){
+                    ClassicEditor.create(appCkeditorTextarea)
+                        .then(function(editor){
+                            appCkEditor = editor;
+                            // console.log(editor.getData());
+                        }).catch(function(error){
+                            console.error( error );
+                        });
+                }
             })();
         </script>
     @endif

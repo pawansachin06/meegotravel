@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\SimController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SocialLoginController;
@@ -96,6 +97,8 @@ Route::middleware('auth.admin')->group(function(){
         ->name('switches.index');
     Route::post('/dashboard/switches', [SettingController::class, 'save'])
         ->name('switches.save');
+    Route::post('/dashboard/artisan/command', [ArtisanController::class, 'command'])
+        ->name('artisan.command');
 });
 
 

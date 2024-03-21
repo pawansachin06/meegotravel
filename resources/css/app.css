@@ -2,14 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.no-tailwindcss * {
+    all: revert-layer;
+}
+
 [x-cloak] {
     display: none;
 }
-
-/*@layer components{
-    @media(min-width:1200px){
-        .container {
-            @apply max-w-6xl;
-        }
-    }
-}*/
