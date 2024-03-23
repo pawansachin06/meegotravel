@@ -17,12 +17,50 @@ class PageController extends Controller
 
     public function index(Request $req)
     {
-        $packages = $this->airaloApi->getPackages();
-        $dev = !empty($req->dev) ? true : false;
-        if(!empty($dev)){
-            dd($packages);
+        // Local eSIMs only
+        $packages = $this->airaloApi->getPackages([
+            'filter'=> ['type' => 'local'],
+            'limit'=> 10,
+        ]);
+        if(!empty($req->dev)){
+            dd('Local Packages', $packages);
         }
-        return view('pages.index', ['packages' => @$packages['data']]);
+        return view('pages.index', [
+            'type' => 'local',
+            'packages'=> @$packages['data'],
+        ]);
+    }
+
+    public function regional(Request $req)
+    {
+        // regional eSIMs only
+        $packages = $this->airaloApi->getPackages([
+            'filter'=> ['type'=> 'global'],
+            'limit'=> 25,
+        ]);
+        if(!empty($req->dev)){
+            dd('Regional Packages', $packages);
+        }
+        return view('pages.index', [
+            'type' => 'regional',
+            'packages'=> @$packages['data'],
+        ]);
+    }
+
+    public function global(Request $req)
+    {
+        // Global eSIMs only
+        $packages = $this->airaloApi->getPackages([
+            'filter'=> ['type'=> 'global', 'country'=> ''],
+            'limit'=> 25,
+        ]);
+        if(!empty($req->dev)){
+            dd('Global Packages', $packages);
+        }
+        return view('pages.index', [
+            'type' => 'global',
+            'packages'=> @$packages['data'],
+        ]);
     }
 
     public function check_usage(Request $req)

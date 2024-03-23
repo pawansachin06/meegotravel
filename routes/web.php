@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/regional-esim', [PageController::class, 'regional'])->name('home.regional');
+Route::get('/global-esim', [PageController::class, 'global'])->name('home.global');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login/redirect/google', [

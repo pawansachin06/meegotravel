@@ -124,7 +124,6 @@ class AiraloApi
 
     public function getPackages($data = [])
     {
-        // @TODO 40 requests in every one min.
         return $this->call('/packages', $data, 'GET', true);
     }
 

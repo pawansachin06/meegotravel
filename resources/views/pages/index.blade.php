@@ -93,12 +93,33 @@
         </div>
     </div>
 
-    <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM offers</h2>
-    <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
+    <section id="pick-esims">
+        <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM offers</h2>
+        <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
+
+        <div class="mb-4 flex justify-center border-b">
+            <a href="{{ route('home') }}#pick-esims" class="inline-block px-3 py-2 rounded-t-md {{ request()->routeIs('home') ? 'border-t border-l border-r -mb-[1px] bg-gray-50' : 'text-gray-500' }}">
+                Local eSIMs
+            </a>
+            <a href="{{ route('home.regional') }}#pick-esims" class="inline-block px-3 py-2 rounded-t-md {{ request()->routeIs('home.regional') ? 'border-t border-l border-r -mb-[1px] bg-gray-50' : 'text-gray-500' }}">
+                Regional eSIMs
+            </a>
+            <a href="{{ route('home.global') }}#pick-esims" class="inline-block px-3 py-2 rounded-t-md {{ request()->routeIs('home.global') ? 'border-t border-l border-r -mb-[1px] bg-gray-50' : 'text-gray-500' }}">
+                Global eSIMs
+            </a>
+        </div>
+    </section>
+
     <div class="flex flex-wrap -mx-2 mb-8">
         @foreach($packages as $package)
             @if(!empty($package['operators']))
                 @foreach($package['operators'] as $operator)
+                    @if( $type == 'regional' && $package['slug'] == 'world' )
+                        @continue
+                    @endif
+                    @if( $type == 'global' && $package['slug'] !== 'world' )
+                        @continue
+                    @endif
                     <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
                         <x-sims.card :operator="$operator" :countrySlug="$package['slug']" :countryCode="$package['country_code']" />
                     </div>
