@@ -26,7 +26,7 @@ class PageController extends Controller
 
         $groups = [];
         $totalOffers = 0;
-        $maxOffers = 15;
+        $maxOffers = 16;
 
         // get Global and Europe offers first
         $res = $this->airaloApi->getPackages([
