@@ -56,10 +56,10 @@
     <div @keydown.escape.prevent.stop="open = false" x-show="open" class="fixed top-0 left-0 bottom-0 right-0 w-full h-full overflow-hidden" role="dialog" aria-modal="true" style="z-index:10;">
         <div class="relative h-full flex items-end mx-auto px-3 max-w-2xl w-auto">
             <div x-cloak x-show="open" @click="open = false" x-transition:enter="transition ease-out transform" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 backdrop-blur-sm cursor-pointer transition-opacity bg-gray-900 bg-opacity-40" aria-hidden="true"></div>
-            <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-32" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-32" class="relative flex flex-col w-full max-h-[75vh] rounded-t-md shadow-lg overflow-hidden transition-all bg-white">
+            <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-32" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-32" class="relative flex flex-col w-full max-h-[95vh] rounded-t-md shadow-lg overflow-hidden transition-all bg-white">
                 <div class="overflow-y-auto app-scrollbar">
                     <div class="px-4 py-3 text-white" style="background:linear-gradient(7deg, <?php echo $operator['gradient_start']; ?>, <?php echo $operator['gradient_end']; ?>);">
-                        <p class="text-xl mb-2 font-semibold">{{ $operator['title'] }}</p>
+                        <p class="text-2xl mb-2 font-semibold">{{ $operator['title'] }}</p>
                         <div class="flex flex-wrap -mx-2">
                             <div class="w-full sm:w-6/12 px-2">
                                 <img src="{{ $operator['image']['url'] }}" alt="logo" class="w-full h-auto" />
@@ -67,7 +67,7 @@
                             <div class="w-full sm:w-6/12 px-2 self-center">
                                 <div class="flex justify-between py-1 border-b border-white/25">
                                     <p>Coverage</p>
-                                    <p>{{ count($operator['coverages']) }} {{ count($operator['coverages']) > 1 ? 'countries' : 'country' }}</p>
+                                    <p>{{ count($operator['countries']) }} {{ count($operator['countries']) > 1 ? 'countries' : 'country' }}</p>
                                 </div>
                                 <div class="flex justify-between py-1 border-b border-white/25">
                                     <p>Data</p>
@@ -85,12 +85,32 @@
                         </div>
                     </div>
                     <div class="px-3 py-3">
-                        <p>some text here</p>
-                        <p>some text here</p>
-                        <p>some text here</p>
-                        <p>some text here</p>
-                        <p>some text here</p>
-                        <p>some text here</p>
+                        <div class="flex flex-wrap -mx-2">
+                            <div class="w-full sm:w-6/12 px-2">
+                                <p class="text-xl mb-1 font-semibold">Supported Countries</p>
+                                @if(!empty($operator['countries']))
+                                <div x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" class="rounded-md border border-gray-200 shadow">
+                                    <div class="border-b relative">
+                                        <input type="text" x-model="search" placeholder="Search country.." spellcheck="false" autocomplete="off" class="border-0 focus:outline-none focus:ring-0 bg-transparent w-full">
+                                        <div class="absolute flex items-center justify-center px-2 text-gray-400 top-0 right-0 bottom-0 pointer-events-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+                                        </div>
+                                    </div>
+                                    <div class="h-44 overflow-y-auto app-scrollbar">
+                                        @foreach($operator['countries'] as $country)
+                                            <div x-show="show($el)" class="flex gap-2 px-2 py-1 {{ $loop->last ? '' : 'border-b' }}">
+                                                <div class="flex-none">
+                                                    <img src="{{ $country['image']['url'] }}" class="w-8 h-auto rounded" alt="{{ $country['country_code'] }}" />
+                                                </div>
+                                                <p>{{ $country['title'] }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="w-full sm:w-6/12 px-2"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-auto mb-2 border-t flex justify-between items-center px-3 py-2">
