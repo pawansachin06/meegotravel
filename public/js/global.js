@@ -5,6 +5,10 @@
             loop: true,
             slidesPerView: 2,
             spaceBetween: 10,
+            navigation: {
+                nextEl: '#home-country-slider-nav .swiper-button-next',
+                prevEl: '#home-country-slider-nav .swiper-button-prev',
+            },
             breakpoints: {
                 480: { slidesPerView: 3 },
                 768: { slidesPerView: 4 },

@@ -42,8 +42,8 @@
     <link rel="preload" as="style" href="/css/global.css?v={{ config('app.version') }}" />
     <link rel="stylesheet" href="/css/global.css?v={{ config('app.version') }}" />
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" />
 
     <script defer src="/js/base.js?v={{ config('app.version') }}"></script>
 </head>

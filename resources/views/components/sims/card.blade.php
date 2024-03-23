@@ -89,16 +89,18 @@
                             <div class="w-full sm:w-6/12 px-2">
                                 <p class="text-xl mb-1 font-semibold">Supported Countries</p>
                                 @if(!empty($operator['countries']))
-                                <div x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" class="rounded-md border border-gray-200 shadow">
-                                    <div class="border-b relative">
+                                <div x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" class="h-56 flex flex-col rounded-md border border-gray-200 shadow">
+                                    @if( count($operator['countries']) > 5 )
+                                    <div class="flex-none border-b relative">
                                         <input type="text" x-model="search" placeholder="Search country.." spellcheck="false" autocomplete="off" class="border-0 focus:outline-none focus:ring-0 bg-transparent w-full">
                                         <div class="absolute flex items-center justify-center px-2 text-gray-400 top-0 right-0 bottom-0 pointer-events-none">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-5 h-5 bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
                                         </div>
                                     </div>
-                                    <div class="h-44 overflow-y-auto app-scrollbar">
+                                    @endif
+                                    <div class="grow h-full overflow-y-auto app-scrollbar">
                                         @foreach($operator['countries'] as $country)
-                                            <div x-show="show($el)" class="flex gap-2 px-2 py-1 {{ $loop->last ? '' : 'border-b' }}">
+                                            <div x-show="show($el)" class="flex gap-2 px-2 py-2 {{ $loop->last ? '' : 'border-b' }}">
                                                 <div class="flex-none">
                                                     <img src="{{ $country['image']['url'] }}" class="w-8 h-auto rounded" alt="{{ $country['country_code'] }}" />
                                                 </div>
@@ -109,7 +111,45 @@
                                 </div>
                                 @endif
                             </div>
-                            <div class="w-full sm:w-6/12 px-2"></div>
+                            <div class="w-full sm:w-6/12 px-2">
+                                <p class="text-xl mb-1 font-semibold">Additional Information</p>
+                                <div class="h-56 rounded-md leading-tight border border-gray-200 shadow">
+                                    <div class="h-full overflow-y-auto app-scrollbar">
+                                        <div class="px-3 py-1 border-b">
+                                            <small class="font-medium text-gray-600">Plan Type</small>
+                                            @if( $operator['plan_type'] == 'data' )
+                                                <p class="">Data Only</p>
+                                            @else
+                                                <p class="">{{ $operator['plan_type'] }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="px-3 py-1 border-b">
+                                            <small class="font-medium text-gray-600">Activation Policy</small>
+                                            @if( $operator['activation_policy'] == 'first-usage' )
+                                                <p class="">The validity period starts when the eSIM connects to any supported network/s.</p>
+                                            @else
+                                                <p class="">{{ $operator['activation_policy'] }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="px-3 py-1 border-b">
+                                            <small class="font-medium text-gray-600">eKYC Identity Verification</small>
+                                            @if( !empty($operator['is_kyc_verify']) )
+                                                <p class="">Required</p>
+                                            @else
+                                                <p class="">Not Required</p>
+                                            @endif
+                                        </div>
+                                        <div class="px-3 py-1">
+                                            <small class="font-medium text-gray-600">Top-up Option</small>
+                                            @if( !empty($operator['rechargeability']) )
+                                                <p>Available</p>
+                                            @else
+                                                <p>Not Available</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

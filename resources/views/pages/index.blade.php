@@ -37,21 +37,27 @@
             <div class="mb-8">
                 <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM destinations</h2>
                 <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
-                <div id="home-country-slider" class="swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($countryGroups as $i => $countryGroup)
-                            <div class="swiper-slide">
-                                <a href="{{ route('sims.show', ['countrySlug' => $countryGroup['slug']]) }}" class="block w-full px-3 py-3 rounded text-center border-b-2 border-primary-200 hover:border-primary-500 shadow-lg transition-colors bg-primary-50 hover:bg-primary-100">
-                                    <span class="inline-block mb-2 w-14 h-14">
-                                        <picture>
-                                            <img src="{{ $countryGroup['image']['url'] }}" alt="flag" class="w-full h-auto rounded-md" />
-                                        </picture>
-                                    </span>
-                                    <p class="font-semibold leading-tight">{{ $countryGroup['title'] }}</p>
-                                    <p class="text-sm">{{ count($countryGroup['operators']) }} eSIM{{ count($countryGroup['operators']) > 1 ? 's' : '' }}</p>
-                                </a>
-                            </div>
-                        @endforeach
+                <div class="relative">
+                    <div id="home-country-slider" class="swiper">
+                        <div class="swiper-wrapper">
+                            @foreach($countryGroups as $i => $countryGroup)
+                                <div class="swiper-slide">
+                                    <a href="{{ route('sims.show', ['countrySlug' => $countryGroup['slug']]) }}" class="block w-full mb-3 px-3 py-3 rounded-md text-center border-b-2 border-primary-200 hover:border-primary-500 shadow-lg transition-colors bg-primary-50 hover:bg-primary-100">
+                                        <span class="inline-block mb-2 w-14 h-14">
+                                            <picture>
+                                                <img src="{{ $countryGroup['image']['url'] }}" alt="flag" class="w-full h-auto rounded-md" />
+                                            </picture>
+                                        </span>
+                                        <p class="font-semibold leading-tight">{{ $countryGroup['title'] }}</p>
+                                        <p class="text-sm">{{ count($countryGroup['operators']) }} eSIM{{ count($countryGroup['operators']) > 1 ? 's' : '' }}</p>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div id="home-country-slider-nav">
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
                     </div>
                 </div>
             </div>
