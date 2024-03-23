@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container px-3 py-5">
-        @if( !empty($operators) )
-            @foreach($operators as $operator)
+        @if( !empty($group['operators']) )
+            @foreach($group['operators'] as $operator)
                 <div class="container px-3 py-5">
                     <div class="flex flex-wrap -mx-1">
                         <div class="w-full sm:w-6/12 px-1 mb-3">
@@ -33,21 +33,10 @@
                     </div>
                 </div>
                 @if( !empty($operator['packages']) )
-                    <div class="flex flex-wrap -mx-1">
+                    <div class="flex flex-wrap -mx-2">
                         @foreach($operator['packages'] as $package)
-                            <div class="w-full sm:w-6/12 md:w-4/12 mb-2 px-1">
-                                <div class="h-full flex flex-col rounded-md border shadow-sm bg-white">
-                                    <div class="px-3 py-3">
-                                        <h3 class="text-lg font-semibold">{{ $package['title'] }}</h3>
-                                        <p class="text-sm text-gray-500">{{ $package['short_info'] }}</p>
-                                        <p>Data: {{ $package['data'] }}</p>
-                                        <p>${{ $package['net_price'] }}</p>
-                                        <p>eKYC (Identity Verification) {{ $operator['is_kyc_verify'] ? 'Required' : 'Not Required' }}</p>
-                                    </div>
-                                    <div class="mt-auto rounded-b-md overflow-hidden">
-                                        <a href="{{ route('sims.checkout', ['countrySlug' => $countrySlug, 'packageId' => $package['id']])  }}" class="inline-flex px-3 py-2 w-full justify-center bg-primary-500 hover:bg-primary-600 text-white">Buy Now</a>
-                                    </div>
-                                </div>
+                            <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
+                                <x-sims.card :operator="$operator" :package="$package" :group="$group" />
                             </div>
                         @endforeach
                     </div>
@@ -69,7 +58,7 @@
    <!--  <div class="container px-3 my-8">
         <h1 class="text-2xl md:text-3xl lg:text-4xl !leading-snug font-bold mb-3 text-center">Asia 10 Countries 20 GB eSIM from TSimTech - only $1.35 per GB</h1>
         <div class="max-w-lg mx-auto">
-            <x-sims.card />
+
         </div>
     </div>
  -->

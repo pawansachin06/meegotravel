@@ -17,17 +17,114 @@ class PageController extends Controller
 
     public function index(Request $req)
     {
-        // Local eSIMs only
-        $packages = $this->airaloApi->getPackages([
-            'filter'=> ['type' => 'local'],
+        // Global eSIMs in this order
+        // 1. Global
+        // 2. Europe
+        // 3. Saudi
+        // 4. United Kingdom (GB)
+        // 5. UAE
+
+        $groups = [];
+        $totalOffers = 0;
+        $maxOffers = 15;
+
+        // get Global and Europe offers first
+        $res = $this->airaloApi->getPackages([
+            'filter'=> ['type' => 'global'],
             'limit'=> 10,
         ]);
+        if(!empty($res['data'])){
+            foreach ($res['data'] as $value) {
+                if($value['slug'] == 'world' || $value['slug'] == 'europe'){
+                    $groups[] = $value;
+                    if(!empty($value['operators'])){
+                        foreach ($value['operators'] as $operator) {
+                            $totalOffers += count($operator['packages']);
+                        }
+                    }
+                }
+            }
+        }
+
+        if($totalOffers < $maxOffers){
+            // get saudi arabia (SA) offers
+            $res = $this->airaloApi->getPackages([
+                'filter'=> ['type' => 'local', 'country'=> 'SA'],
+                'limit'=> 15,
+            ]);
+            if( !empty($res['data']) ){
+                foreach ($res['data'] as $value) {
+                    if($value['country_code'] == 'SA'){
+                        $groups[] = $value;
+                        if(!empty($value['operators'])){
+                            foreach ($value['operators'] as $operator) {
+                                $totalOffers += count($operator['packages']);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if($totalOffers < $maxOffers){
+            // get united kingdom (GB) offers
+            $res = $this->airaloApi->getPackages([
+                'filter'=> ['type' => 'local', 'country'=> 'GB'],
+                'limit' => 15,
+            ]);
+            if( !empty($res['data']) ){
+                foreach ($res['data'] as $value) {
+                    if($value['country_code'] == 'GB'){
+                        $groups[] = $value;
+                        if(!empty($value['operators'])){
+                            foreach ($value['operators'] as $operator) {
+                                $totalOffers += count($operator['packages']);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if($totalOffers < $maxOffers){
+            // get united arab emirates (AE) offers
+            $res = $this->airaloApi->getPackages([
+                'filter'=> ['type' => 'local', 'country'=> 'AE'],
+                'limit' => 15,
+            ]);
+            if( !empty($res['data']) ){
+                foreach ($res['data'] as $value) {
+                    if($value['country_code'] == 'AE'){
+                        $groups[] = $value;
+                        if(!empty($value['operators'])){
+                            foreach ($value['operators'] as $operator) {
+                                $totalOffers += count($operator['packages']);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $countryGroups = [];
+        $res = $this->airaloApi->getPackages([
+            'filter'=> ['type' => 'local'],
+            'limit' => 20,
+        ]);
+        if(!empty($res['data'])){
+            $countryGroups = $res['data'];
+        }
+
+
         if(!empty($req->dev)){
-            dd('Local Packages', $packages);
+            dd($countryGroups , 'Sorted Packages', $totalOffers, $groups);
         }
         return view('pages.index', [
+            'count' => 0,
+            'maxOffers' => $maxOffers,
             'type' => 'local',
-            'packages'=> @$packages['data'],
+            'groups'=> $groups,
+            'countryGroups' => $countryGroups,
         ]);
     }
 

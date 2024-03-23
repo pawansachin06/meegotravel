@@ -32,72 +32,79 @@
         </div>
     </section>
 
-    <div class="container px-3 py-2">
-        <div class="mb-8">
-            <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM destinations</h2>
-            <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
-            <div id="home-country-slider" class="swiper">
+    @if(!empty($countryGroups))
+        <div class="container px-3 py-2">
+            <div class="mb-8">
+                <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM destinations</h2>
+                <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
+                <div id="home-country-slider" class="swiper">
+                    <div class="swiper-wrapper">
+                        @foreach($countryGroups as $i => $countryGroup)
+                            <div class="swiper-slide">
+                                <a href="{{ route('sims.show', ['countrySlug' => $countryGroup['slug']]) }}" class="block w-full px-3 py-3 rounded text-center border-b-2 border-primary-200 hover:border-primary-500 shadow-lg transition-colors bg-primary-50 hover:bg-primary-100">
+                                    <span class="inline-block mb-2 w-14 h-14">
+                                        <picture>
+                                            <img src="{{ $countryGroup['image']['url'] }}" alt="flag" class="w-full h-auto rounded-md" />
+                                        </picture>
+                                    </span>
+                                    <p class="font-semibold leading-tight">{{ $countryGroup['title'] }}</p>
+                                    <p class="text-sm">{{ count($countryGroup['operators']) }} eSIM{{ count($countryGroup['operators']) > 1 ? 's' : '' }}</p>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <div class="container px-3">
+        <div data-aos="fade-up" class="mb-8 max-w-4xl mx-auto">
+            <div id="home-offer-slider" class="swiper">
                 <div class="swiper-wrapper">
-                    @for($i = 0; $i < 10; $i++)
                     <div class="swiper-slide">
-                        <a href="/404" class="block w-full px-3 py-3 rounded text-center border-b-2 border-primary-200 hover:border-primary-500 shadow-lg transition-colors bg-primary-50 hover:bg-primary-100">
-                            <span class="inline-block mb-2 w-14 h-14">
-                                <picture>
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/United-states_flag_icon_round.svg/240px-United-states_flag_icon_round.svg.png" alt="flag" class="w-full h-auto" />
-                                </picture>
-                            </span>
-                            <p class="font-semibold leading-tight">USA</p>
-                            <p class="text-sm">{{ $i + 1 }} eSIMs</p>
+                        <a href="/">
+                            <img src="https://dummyimage.com/1400x400" alt="offer" class="w-full h-auto" />
                         </a>
                     </div>
-                    @endfor
-            </div>
-        </div>
-    </div>
-
-    <div data-aos="fade-up" class="mb-8 max-w-4xl mx-auto">
-        <div id="home-offer-slider" class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <a href="/">
-                        <img src="https://dummyimage.com/1400x400" alt="offer" class="w-full h-auto" />
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="/">
-                        <img src="https://dummyimage.com/1400x400" alt="offer" class="w-full h-auto" />
-                    </a>
+                    <div class="swiper-slide">
+                        <a href="/">
+                            <img src="https://dummyimage.com/1400x400" alt="offer" class="w-full h-auto" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Jump To</h2>
-    <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
-    <div class="flex flex-wrap -mx-1 mb-8">
-        <div class="w-full sm:w-6/12 px-1 mb-2">
-            <a href="/" title="Topup" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
-                    <path d="M460-280v-160h-80l120-240v160h80L460-280ZM280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-120v40h400v-40H280Zm0-80h400v-480H280v480Zm0-560h400v-40H280v40Zm0 0v-40 40Zm0 640v40-40Z" />
-                </svg>
-                <span class="text-lg font-semibold">Topup</span>
-            </a>
-        </div>
-        <div class="w-full sm:w-6/12 px-1 mb-2">
-            <a href="/" title="Check Usage" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
-                    <path d="M480-80q-83 0-156-31.5t-127-86Q143-252 111.5-325T80-480q0-157 104-270t256-128v120q-103 14-171.5 92.5T200-480q0 116 82 198t198 82q66 0 123.5-28t96.5-76l104 60q-54 75-139 119.5T480-80Zm366-238-104-60q9-24 13.5-49.5T760-480q0-107-68.5-185.5T520-758v-120q152 15 256 128t104 270q0 44-8 85t-26 77Z" />
-                </svg>
-                <span class="text-lg font-semibold">Check Usage</span>
-            </a>
+    <div class="container px-3">
+        <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Jump To</h2>
+        <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
+        <div class="flex flex-wrap -mx-1 mb-8">
+            <div class="w-full sm:w-6/12 px-1 mb-2">
+                <a href="/" title="Topup" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
+                        <path d="M460-280v-160h-80l120-240v160h80L460-280ZM280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-120v40h400v-40H280Zm0-80h400v-480H280v480Zm0-560h400v-40H280v40Zm0 0v-40 40Zm0 640v40-40Z" />
+                    </svg>
+                    <span class="text-lg font-semibold">Topup</span>
+                </a>
+            </div>
+            <div class="w-full sm:w-6/12 px-1 mb-2">
+                <a href="/" title="Check Usage" class="inline-flex gap-2 justify-center items-center w-full px-3 py-5 border rounded-md shadow-lg bg-primary-50 hover:text-primary-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="h-7 w-7" width="24" height="24" viewBox="0 -960 960 960">
+                        <path d="M480-80q-83 0-156-31.5t-127-86Q143-252 111.5-325T80-480q0-157 104-270t256-128v120q-103 14-171.5 92.5T200-480q0 116 82 198t198 82q66 0 123.5-28t96.5-76l104 60q-54 75-139 119.5T480-80Zm366-238-104-60q9-24 13.5-49.5T760-480q0-107-68.5-185.5T520-758v-120q152 15 256 128t104 270q0 44-8 85t-26 77Z" />
+                    </svg>
+                    <span class="text-lg font-semibold">Check Usage</span>
+                </a>
+            </div>
         </div>
     </div>
 
-    <section id="pick-esims">
+    <section id="pick-esims" class="container px-3">
         <h2 class="text-2xl md:text-4xl !leading-snug text-center mb-2 font-bold">Popular eSIM offers</h2>
         <p class="text-center text-gray-600 mb-5">Lorem, ipsum dolor sit amet consectetur adipisicing, elit.</p>
 
-        <div class="mb-4 flex justify-center border-b">
+        <!-- <div class="mb-4 flex justify-center border-b">
             <a href="{{ route('home') }}#pick-esims" class="inline-block px-3 py-2 rounded-t-md {{ request()->routeIs('home') ? 'border-t border-l border-r -mb-[1px] bg-gray-50' : 'text-gray-500' }}">
                 Local eSIMs
             </a>
@@ -107,28 +114,33 @@
             <a href="{{ route('home.global') }}#pick-esims" class="inline-block px-3 py-2 rounded-t-md {{ request()->routeIs('home.global') ? 'border-t border-l border-r -mb-[1px] bg-gray-50' : 'text-gray-500' }}">
                 Global eSIMs
             </a>
+        </div> -->
+
+        <div class="flex flex-wrap -mx-2 mb-8">
+            @foreach($groups as $group)
+                @if(!empty($group['operators']))
+                    @foreach($group['operators'] as $operator)
+                        @if( $type == 'regional' && $group['slug'] == 'world' )
+                            @continue
+                        @endif
+                        @if( $type == 'global' && $group['slug'] !== 'world' )
+                            @continue
+                        @endif
+                        @if( !empty($operator['packages']) )
+                            @foreach($operator['packages'] as $package)
+                                @if($count < $maxOffers)
+                                    @php $count++ @endphp
+                                    <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
+                                        <x-sims.card :operator="$operator" :package="$package" :group="$group" />
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                @endif
+            @endforeach
         </div>
     </section>
-
-    <div class="flex flex-wrap -mx-2 mb-8">
-        @foreach($packages as $package)
-            @if(!empty($package['operators']))
-                @foreach($package['operators'] as $operator)
-                    @if( $type == 'regional' && $package['slug'] == 'world' )
-                        @continue
-                    @endif
-                    @if( $type == 'global' && $package['slug'] !== 'world' )
-                        @continue
-                    @endif
-                    <div class="w-full sm:w-6/12 lg:w-4/12 xl:w-3/12 px-2 mb-3">
-                        <x-sims.card :operator="$operator" :countrySlug="$package['slug']" :countryCode="$package['country_code']" />
-                    </div>
-                @endforeach
-            @endif
-        @endforeach
-    </div>
-
-    </div>
 
     <div class="bg-primary-100 pb-10">
         <div class="container px-3 py-9">

@@ -60,9 +60,14 @@ class SimController extends Controller
                 'limit' => 1,
             ],
         ]);
-        $operators = $res['data'][0]['operators'] ?? [];
+        $group = $res['data'][0] ?? [];
+
+        if( !empty($req->dev) ){
+            dd($group);
+        }
+
         return view('sims.show', [
-            'operators'=> $operators,
+            'group'=> $group,
             'countrySlug' => $countrySlug,
             'title' => $res['data'][0]['title'],
             'image' => $res['data'][0]['image'],

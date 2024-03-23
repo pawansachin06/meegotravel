@@ -33,37 +33,11 @@ class AiraloApi
         $this->token = Cache::get('airalo_token', null);
     }
 
-    public function getCountryCodeFromSlug($countrySlug) : String
+    public function getCountryCodeFromSlug($countrySlug): String
     {
-        $data = [
-            'united-states' => 'US',
-            'france' => 'FR',
-            'china' => 'CN',
-            'spain' => 'ES',
-            'turkey' => 'TR',
-            'united-kingdom' => 'GB',
-            'germany' => 'DE',
-            'mexico' => 'MX',
-            'hong-kong' => 'HK',
-            'malaysia' => 'MY',
-            'greece' => 'GR',
-            'canada' => 'CA',
-            'japan' => 'JP',
-            'singapore' => 'SG',
-            'aruba' => 'AW',
-            'afghanistan' => 'AF',
-            'anguilla' => 'AI',
-            'albania' => 'AL',
-            'united-arab-emirates' => 'AE',
-            'argentina' => 'AR',
-            'armenia' => 'AM',
-            'antigua-and-barbuda' => 'AG',
-            'australia' => 'AU',
-            'austria' => 'AT',
-            'azerbaijan' => 'AZ',
-        ];
+        $data = ['united-states' => 'US', 'france' => 'FR', 'china' => 'CN', 'spain' => 'ES', 'turkey' => 'TR', 'united-kingdom' => 'GB', 'germany' => 'DE', 'mexico' => 'MX', 'hong-kong' => 'HK', 'malaysia' => 'MY', 'greece' => 'GR', 'canada' => 'CA', 'japan' => 'JP', 'singapore' => 'SG', 'aruba' => 'AW', 'afghanistan' => 'AF', 'anguilla' => 'AI', 'albania' => 'AL', 'united-arab-emirates' => 'AE', 'argentina' => 'AR', 'armenia' => 'AM', 'antigua-and-barbuda' => 'AG', 'australia' => 'AU', 'austria' => 'AT', 'azerbaijan' => 'AZ', 'belgium' => 'BE', 'benin' => 'BJ', 'bonaire' => 'BQ', 'bangladesh' => 'BD', 'bulgaria' => 'BG', 'bahrain' => 'BH', 'bahamas' => 'BS', 'bosnia-and-herzegovina' => 'BA', 'saint-barthelemy' => 'BL', 'belarus' => 'BY', 'belize' => 'BZ', 'bermuda' => 'BM', 'bolivia' => 'BO', 'brazil' => 'BR', 'barbados' => 'BB', 'brunei' => 'BN', 'botswana' => 'BW', 'switzerland' => 'CH', 'chile' => 'CL', 'cote-divoire' => 'CI', 'cameroon' => 'CM', 'democratic-republic-of-the-congo' => 'CD', 'republic-of-the-congo' => 'CG', 'colombia' => 'CO', 'cape-verde' => 'CV', 'costa-rica' => 'CR', 'curacao' => 'CW', 'cayman-islands' => 'KY', 'cyprus' => 'CY', 'dominica' => 'DM', 'denmark' => 'DK', 'dominican-republic' => 'DO', 'algeria' => 'DZ', 'ecuador' => 'EC', 'egypt' => 'EG', 'estonia' => 'EE', 'finland' => 'FI', 'fiji' => 'FJ', 'faroe-islands' => 'FO', 'gabon' => 'GA', 'georgia' => 'GE', 'ghana' => 'GH', 'gibraltar' => 'GI', 'guinea' => 'GN', 'guadeloupe' => 'GP', 'gambia' => 'GM', 'guinea-bissau' => 'GW', 'grenada' => 'GD', 'greenland' => 'GL', 'guatemala' => 'GT', 'french-guiana' => 'GF', 'guam' => 'GU', 'guyana' => 'GY', 'honduras' => 'HN', 'croatia' => 'HR', 'haiti' => 'HT', 'hungary' => 'HU', 'indonesia' => 'ID', 'isle-of-man' => 'IM', 'india' => 'IN', 'ireland' => 'IE', 'iran-islamic-republic-of' => 'IR', 'iraq' => 'IQ', 'iceland' => 'IS', 'israel' => 'IL', 'jamaica' => 'JM', 'jordan' => 'JO', 'kazakhstan' => 'KZ', 'kenya' => 'KE', 'kyrgyzstan' => 'KG', 'cambodia' => 'KH', 'saint-kitts-and-nevis' => 'KN', 'kuwait' => 'KW', 'laos' => 'LA', 'liberia' => 'LR', 'saint-lucia' => 'LC', 'liechtenstein' => 'LI', 'sri-lanka' => 'LK', 'lithuania' => 'LT', 'luxembourg' => 'LU', 'latvia' => 'LV', 'macau' => 'MO', 'saint-martin' => 'MF', 'morocco' => 'MA', 'moldova' => 'MD', 'madagascar' => 'MG', 'macedonia' => 'MK', 'mali' => 'ML', 'malta' => 'MT', 'montenegro' => 'ME', 'mongolia' => 'MN', 'mozambique' => 'MZ', 'mauritania' => 'MR', 'montserrat' => 'MS', 'martinique' => 'MQ', 'mauritius' => 'MU', 'malawi' => 'MW', 'niger' => 'NE', 'nigeria' => 'NG', 'nicaragua' => 'NI', 'netherlands' => 'NL', 'norway' => 'NO', 'nepal' => 'NP', 'nauru' => 'NR', 'new-zealand' => 'NZ', 'oman' => 'OM', 'pakistan' => 'PK', 'panama' => 'PA', 'peru' => 'PE', 'papua-new-guinea' => 'PG', 'poland' => 'PL', 'puerto-rico' => 'PR', 'portugal' => 'PT', 'paraguay' => 'PY', 'palestine-state-of' => 'PS', 'qatar' => 'QA', 'reunion' => 'RE', 'romania' => 'RO', 'russia' => 'RU', 'rwanda' => 'RW', 'saudi-arabia' => 'SA', 'sudan' => 'SD', 'senegal' => 'SN', 'sierra-leone' => 'SL', 'el-salvador' => 'SV', 'serbia' => 'RS', 'suriname' => 'SR', 'slovakia' => 'SK', 'slovenia' => 'SI', 'sweden' => 'SE', 'swaziland' => 'SZ', 'turks-and-caicos-islands' => 'TC', 'chad' => 'TD', 'tajikistan' => 'TJ', 'timor-leste' => 'TL', 'tonga' => 'TO', 'trinidad-and-tobago' => 'TT', 'tunisia' => 'TN', 'taiwan' => 'TW', 'tanzania' => 'TZ', 'uganda' => 'UG', 'ukraine' => 'UA', 'uruguay' => 'UY', 'uzbekistan' => 'UZ', 'saint-vincent-and-the-grenadines' => 'VC', 'british-virgin-islands' => 'VG', 'virgin-islandsu-s' => 'VI', 'samoa' => 'WS', 'south-africa' => 'ZA', 'zambia' => 'ZM', 'antilles' => 'AN', 'kosovo' => 'XK'];
 
-        if( isset($data[$countrySlug]) ){
+        if (isset($data[$countrySlug])) {
             return $data[$countrySlug];
         }
         return '';
@@ -105,7 +79,8 @@ class AiraloApi
     }
 
     public function getOrder(
-        $id, $data = ['include' => 'sims,user,status',]
+        $id,
+        $data = ['include' => 'sims,user,status',]
     ) {
         return $this->call("/order/$id", $data);
     }
@@ -243,10 +218,10 @@ class AiraloApi
         $info = curl_getinfo($curl);
         $query = http_build_query($data);
         $full_url = $info['url'] . '?' . $query;
-        if($shouldCache){
+        if ($shouldCache) {
             $cacheKey = 'api_cache_' . md5($full_url);
 
-            if(Cache::has($cacheKey)){
+            if (Cache::has($cacheKey)) {
                 Log::info('SERVING CAHCE ', [$full_url]);
                 return Cache::get($cacheKey);
             }
@@ -300,7 +275,7 @@ class AiraloApi
         }
 
         Log::info('API=> ' . $full_url, [$result]);
-        if($shouldCache){
+        if ($shouldCache) {
             // Cache for 60 minutes
             Cache::put($cacheKey, $result, now()->addMinutes(60));
         }
