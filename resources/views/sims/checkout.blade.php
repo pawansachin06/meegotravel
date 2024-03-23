@@ -13,7 +13,6 @@
         closedCompatibleDevicesModal(){
             this.compatible_devices_modal_open = false;
             this.devices_confirmation = false;
-            console.log(this.devices_confirmation);
         },
         confirmCloseCompatibleDevicesModal(){
             this.compatible_devices_modal_open = false;
@@ -21,7 +20,7 @@
         }
     }" class="container px-3 py-5">
         <h1 class="text-3xl md:text-4xl mb-4 text-center font-semibold">Buy {{ $operator['title'] }} eSIM</h1>
-        <div class="flex mb-4 flex-wrap mx-auto max-w-2xl items-center">
+        <div class="flex mb-5 flex-wrap mx-auto max-w-2xl items-center">
             <div class="w-full sm:w-6/12 text-center">
                 <img src="{{ $operator['image']['url'] }}" width="{{ $operator['image']['width'] }}" height="{{ $operator['image']['height'] }}" alt="{{ $operator['title'] }}" class="inline-block relative z-1 w-64 md:w-72 max-w-full h-auto" />
             </div>
@@ -53,7 +52,7 @@
             </div>
         </div>
 
-        <div class="flex gap-2 mb-3 flex-wrap justify-center">
+        <div class="flex gap-2 pb-5 mb-4 border-b flex-wrap justify-center">
             <x-button type="button" @click="qr_installation_modal_open = true">QR Installation</x-button>
             <x-button type="button" @click="manual_installation_modal_open = true">Manual Installation</x-button>
             @if( count($operator['countries']) > 1 )
@@ -61,13 +60,24 @@
             @endif
         </div>
 
-        <div class="max-w-2xl mx-auto">
-            <label class="flex gap-2 items-baseline">
-                <span class="">
-                    <input type="checkbox" x-model="devices_confirmation" @change="devicesConfirmationChange()" class="rounded w-5 h-5 text-primary-500 focus:ring-primary-500" />
-                </span>
-                <span class="leading-tight text-gray-700 select-none cursor-pointer">Before completing this order, please confirm your device is eSIM compatible and network-unlocked. <span class="underline font-medium text-gray-800">View supported devices.</span></span>
-            </label>
+        <div class="max-w-xl mx-auto">
+            <div class="flex mb-3 items-center justify-between gap-3">
+                <p class="text-gray-600">Total Price:</p>
+                <p class="text-2xl font-medium">${{ number_format($package['price'], 2) }}</p>
+            </div>
+            <form action="{{ route('sims.order', ['countrySlug' => $countrySlug, 'packageId' => $packageId ]) }}" method="post" id="sims-order-form">
+                <label class="flex mb-4 gap-2 items-baseline">
+                    <span class="">
+                        <input type="checkbox" required x-model="devices_confirmation" @change="devicesConfirmationChange()" class="rounded w-5 h-5 text-primary-500 focus:ring-primary-500" />
+                    </span>
+                    <span class="leading-tight text-gray-700 select-none cursor-pointer">Before completing this order, please confirm your device is eSIM compatible and network-unlocked. <span class="underline font-medium text-gray-800">View supported devices.</span></span>
+                </label>
+                <input type="hidden" name="countrySlug" value="{{ $countrySlug }}" />
+                <input type="hidden" name="packageId" value="{{ $packageId }}" />
+                <div class="text-center">
+                    <x-button type="submit" data-js="sims-order-form-btn">Complete Order</x-button>
+                </div>
+            </form>
         </div>
 
 
@@ -108,7 +118,7 @@
         <div @keydown.escape.prevent.stop="closedCompatibleDevicesModal()" x-show="compatible_devices_modal_open" class="fixed top-0 left-0 bottom-0 right-0 w-full h-full overflow-hidden" role="dialog" aria-modal="true" style="z-index:11;">
             <div class="relative h-full flex items-end mx-auto px-3 max-w-2xl w-auto">
                 <div x-cloak x-show="compatible_devices_modal_open" @click="closedCompatibleDevicesModal()" x-transition:enter="transition ease-out transform" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 backdrop-blur-sm cursor-pointer transition-opacity bg-gray-900 bg-opacity-40" aria-hidden="true"></div>
-                <div x-cloak x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" x-show="compatible_devices_modal_open" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-32" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-32" class="relative flex flex-col w-full max-h-[85vh] rounded-t-md shadow-lg overflow-hidden transition-all bg-white">
+                <div x-cloak x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" x-show="compatible_devices_modal_open" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-32" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-32" class="relative flex flex-col w-full h-[85vh] rounded-t-md shadow-lg overflow-hidden transition-all bg-white">
                     <div class="border-b">
                         <div class="px-4 py-2 mt-2">
                             <h3 class="text-2xl font-semibold text-gray-800">Supported Devices</h3>
@@ -120,7 +130,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="overflow-y-auto min-h-80 pb-10 app-scrollbar">
+                    <div class="overflow-y-auto pb-10 app-scrollbar">
                         @if( !empty($compatibleDevices['data']) )
                             @foreach($compatibleDevices['data'] as $device)
                                 <div x-show="show($el)" class="flex px-5 py-2 flex-col {{ $loop->last ? '' : 'border-b' }}">
@@ -145,7 +155,7 @@
         <div @keydown.escape.prevent.stop="countries_modal_open = false" x-show="countries_modal_open" class="fixed top-0 left-0 bottom-0 right-0 w-full h-full overflow-hidden" role="dialog" aria-modal="true" style="z-index:11;">
             <div class="relative h-full flex items-end mx-auto px-3 max-w-2xl w-auto">
                 <div x-cloak x-show="countries_modal_open" @click="countries_modal_open = false" x-transition:enter="transition ease-out transform" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 backdrop-blur-sm cursor-pointer transition-opacity bg-gray-900 bg-opacity-40" aria-hidden="true"></div>
-                <div x-cloak x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" x-show="countries_modal_open" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-32" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-32" class="relative flex flex-col w-full max-h-[85vh] rounded-t-md shadow-lg overflow-hidden transition-all bg-white">
+                <div x-cloak x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" x-show="countries_modal_open" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-32" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-32" class="relative flex flex-col w-full h-[85vh] rounded-t-md shadow-lg overflow-hidden transition-all bg-white">
                     <div class="border-b">
                         <div class="px-4 py-2 mt-2">
                             <h3 class="text-2xl font-semibold text-gray-800">Supported Countries</h3>
@@ -157,7 +167,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="overflow-y-auto min-h-80 pb-10 app-scrollbar">
+                    <div class="overflow-y-auto pb-10 app-scrollbar">
                         @foreach($operator['countries'] as $country)
                             <div x-show="show($el)" class="flex gap-2 px-5 py-2 {{ $loop->last ? '' : 'border-b' }}">
                                 <div class="flex-none">
@@ -177,4 +187,7 @@
         </div>
 
     </div>
+    <x-slot name="scripts">
+        <script defer src="/js/sims.js?v={{ config('app.version') }}"></script>
+    </x-slot>
 </x-app-layout>

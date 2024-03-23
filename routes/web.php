@@ -54,8 +54,9 @@ Route::get('/buy-esim/{countrySlug}/{packageId}', [
     ])->name('sims.checkout');
 
 
-Route::middleware('auth')->group(function(){
-});
+Route::post('/order-esim/{countrySlug}/{packageId}', [
+        SimController::class, 'order'
+    ])->name('sims.order');
 
 // Route::resource('esims', SimController::class, [
 //     'name' => 'esims'

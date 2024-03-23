@@ -128,11 +128,36 @@ class SimController extends Controller
             dd($package, $operator, $compatibleDevices);
         }
 
+        if(empty($operator) || empty($package)) abort(404);
+
         return view('sims.checkout', [
             'operator' => $operator,
             'package' => $package,
+            'countrySlug' => $countrySlug,
+            'packageId' => $packageId,
             'compatibleDevices' => $compatibleDevices,
         ]);
+    }
+
+    public function order(Request $req, $countrySlug, $packageId)
+    {
+        $currentUser = $req->user();
+        if( empty($currentUser) ){
+            session([
+                'login_redirect_url' => route('sims.checkout', [
+                    'countrySlug' => $countrySlug, 'packageId' => $packageId,
+                ])
+            ]);
+            return response()->json([
+                'success'=> false,
+                'redirect' => route('login'),
+                'message'=> 'Please login to continue'
+            ]);
+        }
+
+
+        return response()->json(['success'=> true, 'message'=> 'Test']);
+
     }
 
     /**
