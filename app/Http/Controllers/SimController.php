@@ -69,9 +69,9 @@ class SimController extends Controller
         return view('sims.show', [
             'group'=> $group,
             'countrySlug' => $countrySlug,
-            'title' => $res['data'][0]['title'],
-            'image' => $res['data'][0]['image'],
-            'country_code' => $res['data'][0]['country_code'],
+            'title' => $group['title'],
+            'image' => $group['image'],
+            'country_code' => $group['country_code'],
         ]);
     }
 
@@ -91,10 +91,48 @@ class SimController extends Controller
         //
     }
 
-    public function checkout(Request $req)
+    public function checkout(Request $req, $countrySlug, $packageId)
     {
-        // return $this->payPalApi->postOrder();
-        return view('sims.checkout');
+        $type = $countrySlug == 'world' ? 'global' : 'local';
+        $countryCode = $this->airaloApi->getCountryCodeFromSlug($countrySlug);
+
+        $res = $this->airaloApi->getPackages([
+            'filter' => ['type' => $type, 'country' => $countryCode],
+            'limit' => $type == 'local' ? 1 : 100,
+        ]);
+
+        $package = [];
+        $operator = [];
+        if(empty($res['data'])) abort(500, 'Connection Timeout, try again');
+
+        foreach ($res['data'] as $value) {
+            if($value['slug'] == $countrySlug){
+                if(!empty($value['operators'])){
+                    foreach ($value['operators'] as $_operator) {
+                        if(!empty($_operator['packages'])){
+                            foreach ($_operator['packages'] as $_package) {
+                                if($_package['id'] == $packageId){
+                                    $operator = $_operator;
+                                    $package = $_package;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $compatibleDevices = $this->airaloApi->getCompatibleDevices();
+
+        if( !empty($req->dev) ){
+            dd($package, $operator, $compatibleDevices);
+        }
+
+        return view('sims.checkout', [
+            'operator' => $operator,
+            'package' => $package,
+            'compatibleDevices' => $compatibleDevices,
+        ]);
     }
 
     /**

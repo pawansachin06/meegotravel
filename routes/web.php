@@ -46,10 +46,15 @@ Route::get('/troubleshoot', [PageController::class, 'troubleshoot'])->name('trou
 Route::get('/topup', [PageController::class, 'topup'])->name('topup');
 
 
-Route::get('/{countrySlug}/esim', [SimController::class, 'show'])->name('sims.show');
+Route::get('/{countrySlug}/esim', [
+        SimController::class, 'show'
+    ])->name('sims.show');
+Route::get('/buy-esim/{countrySlug}/{packageId}', [
+        SimController::class, 'checkout'
+    ])->name('sims.checkout');
+
+
 Route::middleware('auth')->group(function(){
-    Route::get('/buy-esim-{countrySlug}-{packageId}', [
-        SimController::class, 'checkout'])->name('sims.checkout');
 });
 
 // Route::resource('esims', SimController::class, [

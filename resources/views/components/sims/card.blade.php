@@ -49,7 +49,7 @@
     </div>
     <div class="mt-auto flex rounded-b-md overflow-hidden">
         <button @click="open = true" class="w-6/12 inline-flex px-2 py-2 justify-center font-semibold bg-gray-200 text-gray-800">View Info</button>
-        <button class="w-6/12 inline-flex px-2 py-2 justify-center font-semibold btn-primary text-white">Buy Now</button>
+        <a href="{{ route('sims.checkout', ['countrySlug' => $group['slug'], 'packageId' => $package['id'] ]) }}" class="w-6/12 inline-flex px-2 py-2 justify-center font-semibold btn-primary text-white">Buy Now</a>
     </div>
 
     <!-- modal start -->
@@ -61,32 +61,38 @@
                     <div class="px-4 py-3 text-white" style="background:linear-gradient(7deg, <?php echo $operator['gradient_start']; ?>, <?php echo $operator['gradient_end']; ?>);">
                         <p class="text-2xl mb-2 font-semibold">{{ $operator['title'] }}</p>
                         <div class="flex flex-wrap -mx-2">
-                            <div class="w-full sm:w-6/12 px-2">
+                            <div class="w-full sm:w-6/12 px-2 py-2">
                                 <img src="{{ $operator['image']['url'] }}" alt="logo" class="w-full h-auto" />
                             </div>
-                            <div class="w-full sm:w-6/12 px-2 self-center">
-                                <div class="flex justify-between py-1 border-b border-white/25">
+                            <div class="w-full sm:w-6/12 px-2 py-2 self-center">
+                                <div class="flex gap-2 justify-between py-1 border-b border-white/25">
                                     <p>Coverage</p>
-                                    <p>{{ count($operator['countries']) }} {{ count($operator['countries']) > 1 ? 'countries' : 'country' }}</p>
+                                    <p class="text-right">
+                                        @if( count($operator['countries']) > 1 )
+                                            {{ count($operator['countries']) }} countries
+                                        @else
+                                            {{ $operator['countries'][0]['title'] }}
+                                        @endif
+                                    </p>
                                 </div>
-                                <div class="flex justify-between py-1 border-b border-white/25">
+                                <div class="flex gap-2 justify-between py-1 border-b border-white/25">
                                     <p>Data</p>
-                                    <p>{{ $package['data'] }}</p>
+                                    <p class="text-right">{{ $package['data'] }}</p>
                                 </div>
-                                <div class="flex justify-between py-1 border-b border-white/25">
+                                <div class="flex gap-2 justify-between py-1 border-b border-white/25">
                                     <p>Validity</p>
-                                    <p>{{ $package['day'] }} days</p>
+                                    <p class="text-right">{{ $package['day'] }} days</p>
                                 </div>
-                                <div class="flex justify-between py-1">
+                                <div class="flex gap-2 justify-between py-1">
                                     <p>Price</p>
-                                    <p>${{ number_format($package['price'], 2) }}</p>
+                                    <p class="text-right">${{ number_format($package['price'], 2) }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="px-3 py-3">
                         <div class="flex flex-wrap -mx-2">
-                            <div class="w-full sm:w-6/12 px-2">
+                            <div class="w-full sm:w-6/12 px-2 mb-5">
                                 <p class="text-xl mb-1 font-semibold">Supported Countries</p>
                                 @if(!empty($operator['countries']))
                                 <div x-data="{search: '', show(el){ return this.search === '' || el.textContent.toLowerCase().includes(this.search.toLowerCase()); }}" class="h-56 flex flex-col rounded-md border border-gray-200 shadow">
@@ -158,7 +164,7 @@
                         Price: <span class="text-2xl text-gray-800 font-semibold">${{ number_format($package['price'], 2) }}</span>
                     </div>
                     <div class="">
-                        <x-button>Buy Now</x-button>
+                        <x-button href="{{ route('sims.checkout', ['countrySlug' => $group['slug'], 'packageId' => $package['id'] ]) }}">Buy Now</x-button>
                     </div>
                 </div>
                 <div class="absolute top-0 right-0 px-4 py-2">

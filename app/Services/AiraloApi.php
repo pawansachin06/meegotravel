@@ -104,7 +104,7 @@ class AiraloApi
 
     public function getCompatibleDevices()
     {
-        return $this->call('/compatible-devices');
+        return $this->call('/compatible-devices', [], 'GET', true);
     }
 
     public function postTopup($data)
