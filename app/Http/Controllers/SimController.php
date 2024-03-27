@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\Sim;
 use App\Services\AiraloApi;
 use App\Services\PayPalApi;
 use Illuminate\Http\Request;
+use App\Services\StripeApi;
 use Exception;
 
 class SimController extends Controller
 {
     protected $airaloApi;
     protected $payPalApi;
+    protected $stripeApi;
 
     public function __construct(
-        AiraloApi $airaloApi, PayPalApi $payPalApi
+        AiraloApi $airaloApi, PayPalApi $payPalApi, StripeApi $stripeApi,
     ) {
         $this->airaloApi = $airaloApi;
         $this->payPalApi = $payPalApi;
+        $this->stripeApi = $stripeApi;
     }
 
     /**
@@ -139,6 +143,16 @@ class SimController extends Controller
         ]);
     }
 
+    public function pay(Request $req, $client_secret)
+    {
+        $keys = ['stripe_public_key'];
+        $setting = Setting::whereIn('key', $keys)->pluck('value', 'key');
+        return view('sims.pay', [
+            'client_secret' => $client_secret,
+            'stripe_key' => @$setting['stripe_public_key'],
+        ]);
+    }
+
     public function order(Request $req, $countrySlug, $packageId)
     {
         $currentUser = $req->user();
@@ -155,8 +169,20 @@ class SimController extends Controller
             ]);
         }
 
-
-        return response()->json(['success'=> true, 'message'=> 'Test']);
+        $res = $this->stripeApi->createPaymentIntent(5, 'Just test order');
+        if( !empty($res['success']) && !empty($res['client_secret']) ){
+            $redirect = route('sims.pay', ['client_secret' => $res['client_secret']]);
+            return response()->json([
+                'success'=> true,
+                'redirect'=> $redirect,
+                'message'=> 'Loading...',
+            ]);
+        } else {
+            return response()->json([
+                'success'=> false,
+                'message'=> !empty($res['message']) ? $res['message'] : 'Internal server error',
+            ]);
+        }
 
     }
 

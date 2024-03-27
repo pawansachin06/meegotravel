@@ -1,6 +1,7 @@
 @props([
     'aos' => 0,
     'swiper' => 0,
+    'stripe' => 0,
     'title' => 'Pets Connected',
     'description' => 'Pets Connected with accessories and services.',
 ])
@@ -37,7 +38,6 @@
 
     <link rel="preload" as="style" href="/css/lib/toastify.min.css?v={{ config('app.version') }}" />
     <link rel="stylesheet" href="/css/lib/toastify.min.css?v={{ config('app.version') }}" />
-
 
     <link rel="preload" as="style" href="/css/global.css?v={{ config('app.version') }}" />
     <link rel="stylesheet" href="/css/global.css?v={{ config('app.version') }}" />
@@ -127,6 +127,10 @@
     @endif
     <script defer src="/js/lib/toastify.min.js?v={{ config('app.version') }}"></script>
     <script defer src="/js/utils.js?v={{ config('app.version') }}"></script>
+    @if(!empty($stripe))
+        <script defer src="https://js.stripe.com/v3/"></script>
+        <script defer src="/js/stripe.js?v={{ config('app.version') }}"></script>
+    @endif
     @if( isset($scripts) ) {{ $scripts }} @endif
     <script defer src="/js/global.js?v={{ config('app.version') }}"></script>
 </body>

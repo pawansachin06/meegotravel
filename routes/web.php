@@ -52,12 +52,12 @@ Route::get('/{countrySlug}/esim', [
 Route::get('/buy-esim/{countrySlug}/{packageId}', [
         SimController::class, 'checkout'
     ])->name('sims.checkout');
-
-
 Route::post('/order-esim/{countrySlug}/{packageId}', [
         SimController::class, 'order'
     ])->name('sims.order');
 
+
+Route::get('/checkout/esim/stripe/{client_secret}', [SimController::class, 'pay'])->name('sims.pay');
 // Route::resource('esims', SimController::class, [
 //     'name' => 'esims'
 // ]);

@@ -1,4 +1,4 @@
-var currentDate = new Date, targetDate = new Date('2024-03-25'), dev = currentDate < targetDate;
+var currentDate = new Date, targetDate = new Date('2024-04-25'), dev = currentDate < targetDate;
 var csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
 try {
