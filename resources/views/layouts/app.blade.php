@@ -2,6 +2,7 @@
     'aos' => 0,
     'swiper' => 0,
     'stripe' => 0,
+    'googlepay' => 0,
     'title' => 'Pets Connected',
     'description' => 'Pets Connected with accessories and services.',
 ])
@@ -132,6 +133,10 @@
         <script defer src="/js/stripe.js?v={{ config('app.version') }}"></script>
     @endif
     @if( isset($scripts) ) {{ $scripts }} @endif
+    @if(!empty($googlepay))
+    <script defer src="/js/google.pay.js?v={{ config('app.version') }}"></script>
+    <script defer src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+    @endif
     <script defer src="/js/global.js?v={{ config('app.version') }}"></script>
 </body>
 

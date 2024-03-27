@@ -12,7 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary;
+            $table->string('status')->default('draft');
+            $table->decimal('subtotal_price', 8, 2)->unsigned()->default(0);
+            $table->decimal('total_price', 8, 2)->unsigned()->default(0);
+            $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
+            $table->string('session_id');
+            $table->string('billing_name')->nullable();
+            $table->string('billing_email')->nullable();
+            $table->string('billing_phone')->nullable();
+            $table->boolean('cart_cleared')->default(false);
             $table->timestamps();
         });
     }
